@@ -1,0 +1,11 @@
+.slider {
+  @media screen and (min-width: 1440px) {
+    min-width: 688px;
+  }
+  @media screen and (max-width: 1440px) {
+    min-width: 410px;
+  }
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+}
