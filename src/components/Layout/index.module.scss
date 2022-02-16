@@ -112,8 +112,16 @@
     line-height: 15px;
     color: #121212;
 
+    &:hover {
+      color: #0ec261;
+    }
+
     @media screen and (max-width: 320px) {
       color: #0ec261;
+
+      &:hover {
+        color: #eeeeee;
+      }
     }
   }
 
