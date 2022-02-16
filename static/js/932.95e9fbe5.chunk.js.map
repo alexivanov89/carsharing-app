@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/932.95e9fbe5.chunk.js","mappings":"wIAIA,UAJkB,WAChB,OAAO","sources":["pages/OrderPage/OrderPage.js"],"sourcesContent":["const OrderPage = () => {\n  return <div>OrderPage</div>;\n};\n\nexport default OrderPage;\n"],"names":[],"sourceRoot":""}

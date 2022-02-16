@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkcarsharing_app=self.webpackChunkcarsharing_app||[]).push([[932],{932:function(r,a,e){e.r(a);var n=e(184);a.default=function(){return(0,n.jsx)("div",{children:"OrderPage"})}}}]);
-//# sourceMappingURL=932.95e9fbe5.chunk.js.map
