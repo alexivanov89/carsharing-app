@@ -10,6 +10,10 @@
   @media screen and (max-width: 768px) {
     display: none;
   }
+
+  &.menuActive {
+    z-index: -1;
+  }
 }
 
 .swiper {
@@ -44,7 +48,7 @@
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
-  color: #eeeeee;
+  color: var(--main-color-light);
   text-align: center;
 }
 
@@ -58,7 +62,7 @@
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
-  color: #eeeeee;
+  color: var(--main-color-light);
   text-align: center;
 }
 
@@ -72,7 +76,7 @@
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
-  color: #eeeeee;
+  color: var(--main-color-light);
   text-align: center;
 }
 
@@ -86,6 +90,37 @@
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
-  color: #eeeeee;
+  color: var(--main-color-light);
   text-align: center;
+}
+
+.prevRef {
+  top: 0;
+  left: 0;
+}
+
+.nextRef {
+  top: 0;
+  right: 0;
+}
+
+.prevRef,
+.nextRef {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  z-index: 10;
+  height: 100%;
+
+  &:hover {
+    background: var(--main-color);
+    opacity: 0.2;
+    cursor: pointer;
+  }
+
+  @media screen and (max-width: 1439px) {
+    width: 32px;
+  }
 }

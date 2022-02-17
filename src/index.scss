@@ -1,5 +1,12 @@
+@import-normalize;
 @import "./styles/fonts";
 
+:root {
+  --main-color: #0ec261;
+  --main-color-black: #121212;
+  --main-color-grey: #999999;
+  --main-color-light: #eeeeee;
+}
 *,
 ::before,
 ::after {
@@ -36,4 +43,27 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+.swiper-pagination {
+  bottom: 32px !important;
+}
+
+.swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  opacity: 1;
+  background: #eeeeee;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--main-color);
+}
+
+.disabled {
+  opacity: 0.2;
+  &:hover {
+    background: transparent;
+    pointer-events: none;
+  }
 }

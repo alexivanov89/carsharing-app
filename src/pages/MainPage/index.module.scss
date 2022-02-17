@@ -15,9 +15,9 @@
       font-weight: 700;
       font-size: 70px;
       line-height: 66px;
-      color: #121212;
+      color: var(--main-color-black);
       strong {
-        color: #0ec261;
+        color: var(--main-color);
       }
 
       @media screen and (max-width: 480px) {
@@ -32,7 +32,7 @@
       font-weight: 300;
       font-size: 26px;
       line-height: 30px;
-      color: #999999;
+      color: var(--main-color-grey);
 
       @media screen and (max-width: 480px) {
         padding: 16px 16px 0px 16px;
@@ -54,7 +54,7 @@
 .reserveBtn {
   width: 250px;
   height: 48px;
-  background: linear-gradient(90deg, #0ec261 2.61%, #039f67 112.6%);
+  background: linear-gradient(90deg, var(--main-color) 2.61%, #039f67 112.6%);
   background-blend-mode: darken;
   border-radius: 8px;
   border: none;
@@ -64,6 +64,18 @@
   line-height: 21px;
   color: #ffffff;
   text-align: center;
+
+  &:hover {
+    background: linear-gradient(90deg, #0b934a 2.61%, #026e47 112.6%);
+  }
+
+  &:active {
+    background: linear-gradient(90deg, #076432 2.61%, #013c27 112.6%);
+  }
+
+  &:target {
+    background: linear-gradient(90deg, #0b934a 2.61%, #026e47 112.6%);
+  }
 
   @media screen and (max-width: 320px) {
     width: 100%;

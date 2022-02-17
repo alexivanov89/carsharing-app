@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { SideBar } from './SideBar';
 import { Slider } from './Slider';
@@ -6,7 +7,6 @@ import { Menu } from './Menu';
 import { MenuBtn } from './MenuBtn';
 import { routePaths } from '../../router/routes';
 import styles from './index.module.scss';
-import { useState } from 'react';
 
 const Footer = () => {
   return (
@@ -32,7 +32,7 @@ const menuItems = [
 
 const Layout = ({ children }) => {
   const [menuActive, setMenuActive] = useState(false);
-  console.log(menuActive);
+
   return (
     <div className={styles.layout}>
       <SideBar onClick={() => setMenuActive(!menuActive)} />
@@ -42,10 +42,12 @@ const Layout = ({ children }) => {
             <MenuBtn classes={styles.header__menu} onClick={() => setMenuActive(!menuActive)} />
             <h1 className={styles.header__title}>Need for drive</h1>
           </div>
-          <div className={styles.header__locationGroup}>
-            <MapLabel className={styles.header__locationGroupIcon} />
-            <div className={styles.header__locationGroupCity}>Ульяновск</div>
-          </div>
+          <button className={styles.header__locationGroupBtn} type="button">
+            <div className={styles.header__locationGroup}>
+              <MapLabel className={styles.header__locationGroupIcon} />
+              <div className={styles.header__locationGroupCity}>Ульяновск</div>
+            </div>
+          </button>
         </header>
         <main className={styles.main}>{children}</main>
         <Switch>
@@ -54,7 +56,11 @@ const Layout = ({ children }) => {
         </Switch>
       </div>
       <Switch>
-        <Route path={routePaths.mainPage} exact component={Slider} />
+        <Route
+          path={routePaths.mainPage}
+          exact
+          component={() => <Slider menuActive={menuActive} />}
+        />
         <Route path={routePaths.orderPage} exact component={Empty} />
       </Switch>
       <Menu menuItems={menuItems} menuActive={menuActive} setMenuActive={setMenuActive} />
