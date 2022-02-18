@@ -1,6 +1,8 @@
 import { useHistory } from 'react-router-dom';
+import Button from '../../components/UI/Button/Button';
 import { routePaths } from '../../router/routes';
 import styles from './index.module.scss';
+
 const MainPage = () => {
   const history = useHistory();
 
@@ -13,13 +15,9 @@ const MainPage = () => {
         </h2>
         <p>Поминутная аренда авто твоего города</p>
       </div>
-      <button
-        className={styles.reserveBtn}
-        type="button"
-        onClick={() => history.push(routePaths.orderPage)}
-      >
+      <Button classes={styles.reserveBtn} onClick={() => history.push(routePaths.orderPage)}>
         Забронировать
-      </button>
+      </Button>
     </div>
   );
 };

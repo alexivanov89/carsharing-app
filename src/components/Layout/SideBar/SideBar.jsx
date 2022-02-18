@@ -1,12 +1,14 @@
-import { MenuBtn } from '../MenuBtn';
-import { LocalizationBtn } from '../LocalizationBtn';
+import Button from '../../UI/Button/Button';
+import { MenuIcon } from '../../../assets/icons/Buttons';
 import styles from './index.module.scss';
 
 const SideBar = ({ onClick }) => {
   return (
     <div className={styles.sideBar}>
-      <MenuBtn classes={styles.sideBar__menu} onClick={onClick} />
-      <LocalizationBtn lang="Eng" />
+      <Button classes={styles.sideBar__menu} onClick={onClick}>
+        <MenuIcon />
+      </Button>
+      <Button classes={styles.localizationBtn}>Eng</Button>
     </div>
   );
 };

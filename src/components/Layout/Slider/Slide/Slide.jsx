@@ -1,4 +1,5 @@
 import { useHistory } from 'react-router-dom';
+import Button from '../../../UI/Button/Button';
 import styles from './index.module.scss';
 
 const Slide = ({ background, label, stylesBtn, routePathBtn }) => {
@@ -15,9 +16,9 @@ const Slide = ({ background, label, stylesBtn, routePathBtn }) => {
         <h3>{label.title}</h3>
         <p>{label.subtitle}</p>
       </div>
-      <button className={stylesBtn} type="button" onClick={() => history.push(routePathBtn)}>
+      <Button classes={stylesBtn} onClick={() => history.push(routePathBtn)}>
         Подробнее
-      </button>
+      </Button>
     </div>
   );
 };

@@ -7,7 +7,7 @@ import {
   InstagramSocialIcon,
   TelegramSocialIcon,
 } from '../../../assets/icons/Buttons';
-import { LocalizationBtn } from '../LocalizationBtn';
+import Button from '../../UI/Button/Button';
 import styles from './index.module.scss';
 
 const Menu = ({ menuItems, menuActive, setMenuActive }) => {
@@ -17,9 +17,9 @@ const Menu = ({ menuItems, menuActive, setMenuActive }) => {
         [styles.active]: menuActive,
       })}
     >
-      <button className={styles.close} type="button" onClick={() => setMenuActive(false)}>
+      <Button classes={styles.close} onClick={() => setMenuActive(false)}>
         <CloseIcon />
-      </button>
+      </Button>
       <div className={styles.fade} />
       <div className={styles.menu__content}>
         <div className={styles.menu__contentWrapper}>
@@ -35,19 +35,19 @@ const Menu = ({ menuItems, menuActive, setMenuActive }) => {
             ))}
           </ul>
           <div className={styles.groupBtn}>
-            <button className={styles.socialBtn} type="button">
+            <Button classes={styles.socialBtn}>
               <TelegramSocialIcon />
-            </button>
-            <button className={styles.socialBtn} type="button">
+            </Button>
+            <Button classes={styles.socialBtn}>
               <FacebookSocialIcon />
-            </button>
-            <button className={styles.socialBtn} type="button">
+            </Button>
+            <Button classes={styles.socialBtn}>
               <InstagramSocialIcon />
-            </button>
+            </Button>
           </div>
         </div>
       </div>
-      <LocalizationBtn lang="Eng" classes={styles.menuLocalizationBtn} />
+      <Button classes={styles.menuLocalizationBtn}>Eng</Button>
     </div>
   );
 };
