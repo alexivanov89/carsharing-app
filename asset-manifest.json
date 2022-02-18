@@ -1,9 +1,9 @@
 {
   "files": {
-    "main.css": "/carsharing-app/static/css/main.a22e502d.css",
-    "main.js": "/carsharing-app/static/js/main.eb9d3bff.js",
+    "main.css": "/carsharing-app/static/css/main.aa0ef0d3.css",
+    "main.js": "/carsharing-app/static/js/main.de2d9e0f.js",
     "static/css/653.1dcad930.chunk.css": "/carsharing-app/static/css/653.1dcad930.chunk.css",
-    "static/js/653.b71fd5c9.chunk.js": "/carsharing-app/static/js/653.b71fd5c9.chunk.js",
+    "static/js/653.55ac84a0.chunk.js": "/carsharing-app/static/js/653.55ac84a0.chunk.js",
     "static/js/101.24143c6f.chunk.js": "/carsharing-app/static/js/101.24143c6f.chunk.js",
     "static/media/Slider4.png": "/carsharing-app/static/media/Slider4.44455ae9ca1eb896c80f.png",
     "static/media/Slider3.png": "/carsharing-app/static/media/Slider3.495aeda04fb95c0ab5fc.png",
@@ -54,14 +54,14 @@
     "static/media/close_btn.svg": "/carsharing-app/static/media/close_btn.2990540f6689a43caf1f9e654301d433.svg",
     "static/media/arrow_left_btn.svg": "/carsharing-app/static/media/arrow_left_btn.dd0226d1ef40f8836d758d1d948bcb88.svg",
     "static/media/arrow_right_btn.svg": "/carsharing-app/static/media/arrow_right_btn.9d87137d3cdc657274dc93047421f39a.svg",
-    "main.a22e502d.css.map": "/carsharing-app/static/css/main.a22e502d.css.map",
-    "main.eb9d3bff.js.map": "/carsharing-app/static/js/main.eb9d3bff.js.map",
+    "main.aa0ef0d3.css.map": "/carsharing-app/static/css/main.aa0ef0d3.css.map",
+    "main.de2d9e0f.js.map": "/carsharing-app/static/js/main.de2d9e0f.js.map",
     "653.1dcad930.chunk.css.map": "/carsharing-app/static/css/653.1dcad930.chunk.css.map",
-    "653.b71fd5c9.chunk.js.map": "/carsharing-app/static/js/653.b71fd5c9.chunk.js.map",
+    "653.55ac84a0.chunk.js.map": "/carsharing-app/static/js/653.55ac84a0.chunk.js.map",
     "101.24143c6f.chunk.js.map": "/carsharing-app/static/js/101.24143c6f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a22e502d.css",
-    "static/js/main.eb9d3bff.js"
+    "static/css/main.aa0ef0d3.css",
+    "static/js/main.de2d9e0f.js"
   ]
 }
