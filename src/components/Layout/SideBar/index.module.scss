@@ -1,0 +1,47 @@
+.sideBar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 64px;
+  padding: 32px 0px 15px 0px;
+  background-color: #151b1f;
+  color: white;
+
+  &__menu {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+
+    &:hover {
+      svg * {
+        stroke: var(--main-color);
+      }
+    }
+  }
+
+  .localizationBtn {
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 15px;
+    color: var(--main-color);
+    width: 48px;
+    height: 48px;
+    border: 1px solid transparent;
+    border-radius: 50%;
+
+    &:hover {
+      border: 1px solid var(--main-color-light);
+      color: var(--main-color-light);
+    }
+
+    &:active {
+      color: var(--main-color);
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
+}
