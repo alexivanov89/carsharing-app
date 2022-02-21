@@ -61,6 +61,7 @@ const Slider = ({ menuActive, slides }) => {
           className={styles.prevRef}
           onClick={() => swiperRef.current.swiper.slidePrev()}
         >
+          <div className={styles.opacity} />
           <ArrowLeftIcon />
         </div>
         <div
@@ -68,6 +69,7 @@ const Slider = ({ menuActive, slides }) => {
           className={styles.nextRef}
           onClick={() => swiperRef.current.swiper.slideNext()}
         >
+          <div className={styles.opacity} />
           <ArrowRightIcon />
         </div>
       </Swiper>

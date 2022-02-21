@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Button from '../UI/Button/Button';
+import { Empty } from '../Empty';
 import { Menu } from './Menu';
 import { MenuIcon } from '../../assets/icons/Buttons';
 import { MapLabel } from '../../assets/icons/UngroupedIcons';
 import { SideBar } from './SideBar';
 import { Slider } from './Slider';
 import { routePaths } from '../../router/routes';
-import BG1 from '../../assets/img/Slider1.png';
-import BG2 from '../../assets/img/Slider2.png';
-import BG3 from '../../assets/img/Slider3.png';
-import BG4 from '../../assets/img/Slider4.png';
+import BG1 from '../../assets/img/Slider1.webp';
+import BG2 from '../../assets/img/Slider2.webp';
+import BG3 from '../../assets/img/Slider3.webp';
+import BG4 from '../../assets/img/Slider4.webp';
 import styles from './index.module.scss';
 
 const Footer = () => {
@@ -22,10 +23,6 @@ const Footer = () => {
       </a>
     </footer>
   );
-};
-
-const Empty = () => {
-  return <></>;
 };
 
 const menuItems = [

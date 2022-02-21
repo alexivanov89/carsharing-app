@@ -57,14 +57,21 @@
   width: 64px;
   z-index: 10;
   height: 100%;
+  cursor: pointer;
 
-  &:hover {
+  &:hover .opacity {
     background: var(--main-color);
     opacity: 0.2;
-    cursor: pointer;
   }
 
   @media screen and (max-width: 1439px) {
     width: 32px;
   }
+}
+
+.opacity {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
