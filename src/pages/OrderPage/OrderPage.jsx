@@ -9,8 +9,6 @@ import { numberWithSpaces } from '../../utils/numberWithSpaces';
 import styles from './index.module.scss';
 import './select.scss';
 
-const defaultValues = {};
-
 const OrderPage = () => {
   const dispatch = useDispatch();
   const {
@@ -25,11 +23,9 @@ const OrderPage = () => {
   } = useSelector(({ orderForm }) => orderForm);
 
   const { city, point } = pointOfIssue;
-  const { handleSubmit, reset, setValue, control } = useForm({ defaultValues });
+  const { handleSubmit, reset, setValue, control } = useForm();
 
-  const onSubmit = (data) => {
-    console.log('data', data);
-  };
+  const onSubmit = (data) => {};
 
   const renderButton = (step) => {
     switch (step) {
@@ -178,7 +174,7 @@ const OrderPage = () => {
                           { value: '4', label: 'Краснодар' },
                           { value: '5', label: 'Воронеж' },
                         ]}
-                        onChange={() => console.log('test')}
+                        onChange={() => {}}
                         className={styles.select}
                         classNamePrefix="select"
                       />
@@ -200,7 +196,7 @@ const OrderPage = () => {
                           { value: '1', label: 'Нариманова 42' },
                           { value: '2', label: 'Нариманова 24' },
                         ]}
-                        onChange={() => console.log('test')}
+                        onChange={() => {}}
                         className={styles.select}
                         classNamePrefix="select"
                       />
