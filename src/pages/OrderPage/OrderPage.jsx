@@ -7,6 +7,8 @@ import Map from '../../assets/img/map.webp';
 import { setCurrentStep, setFilledStep } from '../../store/slices/orderFormSlice';
 import { numberWithSpaces } from '../../utils/numberWithSpaces';
 import styles from './index.module.scss';
+import carImage1 from '../../assets/img/carImage1.png';
+import carImage2 from '../../assets/img/carImage2.png';
 import './select.scss';
 
 const OrderPage = () => {
@@ -214,7 +216,129 @@ const OrderPage = () => {
                 </div>
               </section>
             )}
-            {currentStep === 1 && <div>step2</div>}
+            {currentStep === 1 && (
+              <section className={styles.car}>
+                <div className={styles.car__filters}>
+                  <ul className={styles.list__filters}>
+                    <li className={styles.list__filters__item}>
+                      <input
+                        type="radio"
+                        className={styles.radioBtn}
+                        name="choiceFilterCar"
+                        id="allCar"
+                      />
+                      <label htmlFor="allCar" className={styles.label}>
+                        Все модели
+                      </label>
+                      <div className={styles.circle} />
+                    </li>
+
+                    <li className={styles.list__filters__item}>
+                      <input
+                        type="radio"
+                        className={styles.radioBtn}
+                        name="choiceFilterCar"
+                        id="econom"
+                      />
+                      <label htmlFor="econom" className={styles.label}>
+                        Эконом
+                      </label>
+                      <div className={styles.circle} />
+                    </li>
+
+                    <li className={styles.list__filters__item}>
+                      <input
+                        type="radio"
+                        className={styles.radioBtn}
+                        name="choiceFilterCar"
+                        id="premium"
+                      />
+                      <label htmlFor="premium" className={styles.label}>
+                        Премиум
+                      </label>
+                      <div className={styles.circle} />
+                    </li>
+                  </ul>
+                </div>
+
+                <div className={styles.wrapper_car__list}>
+                  <div className={styles.car__list}>
+                    <input type="radio" name="choiceCar" id="car1" />
+                    <label htmlFor="car1" className={styles.car__list__item}>
+                      <div className={styles.car__info}>
+                        <div className={styles.car__model}>ELANTRA</div>
+                        <div className={styles.car__price}>
+                          {`${numberWithSpaces(price.min)} - ${numberWithSpaces(price.max)} ₽`}
+                        </div>
+                      </div>
+                      <div className={styles.car__img}>
+                        <img src={carImage1} alt="car" loading="lazy" />
+                      </div>
+                    </label>
+                    <input type="radio" name="choiceCar" id="car2" />
+                    <label htmlFor="car2" className={styles.car__list__item}>
+                      <div className={styles.car__info}>
+                        <div className={styles.car__model}>i30 N</div>
+                        <div className={styles.car__price}>
+                          {`${numberWithSpaces(price.min)} - ${numberWithSpaces(price.max)} ₽`}
+                        </div>
+                      </div>
+                      <div className={styles.car__img}>
+                        <img src={carImage2} alt="car" loading="lazy" />
+                      </div>
+                    </label>
+                    <input type="radio" name="choiceCar" id="car3" />
+                    <label htmlFor="car3" className={styles.car__list__item}>
+                      <div className={styles.car__info}>
+                        <div className={styles.car__model}>CRETA</div>
+                        <div className={styles.car__price}>
+                          {`${numberWithSpaces(price.min)} - ${numberWithSpaces(price.max)} ₽`}
+                        </div>
+                      </div>
+                      <div className={styles.car__img}>
+                        <img src={carImage1} alt="car" loading="lazy" />
+                      </div>
+                    </label>
+                    <input type="radio" name="choiceCar" id="car4" />
+                    <label htmlFor="car4" className={styles.car__list__item}>
+                      <div className={styles.car__info}>
+                        <div className={styles.car__model}>SONATA</div>
+                        <div className={styles.car__price}>
+                          {`${numberWithSpaces(price.min)} - ${numberWithSpaces(price.max)} ₽`}
+                        </div>
+                      </div>
+                      <div className={styles.car__img}>
+                        <img src={carImage2} alt="car" loading="lazy" />
+                      </div>
+                    </label>
+                    <input type="radio" name="choiceCar" id="car5" />
+                    <label htmlFor="car5" className={styles.car__list__item}>
+                      <div className={styles.car__info}>
+                        <div className={styles.car__model}>ELANTRA</div>
+                        <div className={styles.car__price}>
+                          {`${numberWithSpaces(price.min)} - ${numberWithSpaces(price.max)} ₽`}
+                        </div>
+                      </div>
+                      <div className={styles.car__img}>
+                        <img src={carImage1} alt="car" loading="lazy" />
+                      </div>
+                    </label>
+                    <input type="radio" name="choiceCar" id="car6" />
+                    <label htmlFor="car6" className={styles.car__list__item}>
+                      <div className={styles.car__info}>
+                        <div className={styles.car__model}>i30 N</div>
+                        <div className={styles.car__price}>
+                          {`${numberWithSpaces(price.min)} - ${numberWithSpaces(price.max)} ₽`}
+                        </div>
+                      </div>
+                      <div className={styles.car__img}>
+                        <img src={carImage2} alt="car" loading="lazy" />
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </section>
+            )}
             {currentStep === 2 && <div>step3</div>}
             {currentStep === 3 && <div>step4</div>}
           </form>
@@ -228,6 +352,14 @@ const OrderPage = () => {
                 <div className={styles.orderInfo__param__value}>
                   <div className={styles.orderInfo__city}>{`${city},`}</div>
                   <div className={styles.pointOfIssue}>{point}</div>
+                </div>
+              </div>
+            )}
+            {car.model && (
+              <div className={styles.orderInfo__param}>
+                <div className={styles.orderInfo__param__name}>Модель</div>
+                <div className={styles.orderInfo__param__value}>
+                  <div className={styles.orderInfo__car}>{car.model}</div>
                 </div>
               </div>
             )}

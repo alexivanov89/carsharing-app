@@ -8,7 +8,7 @@ const initialState = {
     point: 'Нариманова, 42',
   },
   car: {
-    model: '',
+    model: 'Hyndai, i30 N',
     color: '',
   },
   rentalDuration: '',
