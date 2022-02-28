@@ -9,12 +9,12 @@ const initialState = {
   },
   car: {
     model: 'Hyndai, i30 N',
-    color: '',
+    color: 'Голубой',
   },
-  rentalDuration: '',
-  rate: '',
+  rentalDuration: '1д 2ч',
+  rate: 'На сутки',
   additionalServices: {
-    fullTank: false,
+    fullTank: true,
     babyChair: false,
     rightHandDrive: false,
   },

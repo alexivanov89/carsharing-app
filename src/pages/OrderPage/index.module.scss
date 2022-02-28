@@ -259,6 +259,7 @@
 
         &:hover {
           outline: 1px solid var(--main-color-grey);
+          cursor: pointer;
           z-index: 2;
         }
 
@@ -295,6 +296,183 @@
       font-size: 14px;
       line-height: 16px;
       color: var(--main-color-grey);
+    }
+  }
+
+  .additionally {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    .car__color,
+    .rate,
+    .additionalServices,
+    .rentalDuration {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      &__title {
+        display: flex;
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 16px;
+        color: var(--main-color-black);
+      }
+
+      .color__list,
+      .rate__list,
+      .additionalServices__list,
+      .rentalDuration__dates {
+        display: flex;
+      }
+
+      .rentalDuration__date {
+        display: flex;
+        align-items: center;
+
+        [class$="react-datepicker-wrapper"] {
+          width: 224px;
+
+          [class$="react-datepicker__close-icon"] {
+            padding: 0px 8px 0px 0px;
+
+            &:after {
+              background-color: #ffffff;
+              color: var(--main-color-black);
+              padding: 0px;
+              font-size: 18px;
+            }
+          }
+        }
+
+        input {
+          border: none;
+          border-bottom: 1px solid var(--main-color-grey);
+          padding-left: 8px;
+          font-weight: 300;
+          font-size: 14px;
+          line-height: 16px;
+          color: var(--main-color-black);
+          width: 224px;
+
+          &:focus-visible {
+            outline: none;
+          }
+        }
+
+        .dateTo,
+        .dateFrom {
+          display: flex;
+          justify-content: flex-end;
+          width: 34px;
+          padding-right: 16px;
+          font-weight: 300;
+          font-size: 14px;
+          line-height: 16px;
+          color: var(--main-color-black);
+        }
+      }
+
+      .rate__list,
+      .additionalServices__list,
+      .rentalDuration__dates {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .color__list {
+        &__item {
+          padding-right: 16px;
+        }
+      }
+
+      .color__list__item,
+      .rate__list__item,
+      .additionalServices__list__item {
+        display: flex;
+        flex-wrap: nowrap;
+        position: relative;
+
+        .label {
+          position: relative;
+          cursor: pointer;
+          font-weight: 300;
+          font-size: 14px;
+          line-height: 16px;
+          color: var(--main-color-grey);
+          padding-left: 20px;
+        }
+
+        input {
+          position: absolute;
+          top: 1px;
+          left: 0;
+          opacity: 0;
+          height: 12px;
+          width: 12px;
+          z-index: 10;
+          cursor: pointer;
+        }
+
+        input:checked + label {
+          color: var(--main-color-black);
+        }
+
+        input:checked ~ .circle {
+          border-color: var(--main-color);
+          border-width: 3px;
+        }
+
+        input:checked ~ .square {
+          border-color: var(--main-color);
+
+          &:after {
+            opacity: 1;
+          }
+        }
+
+        .circle {
+          content: "";
+          position: absolute;
+          top: 1px;
+          left: 0;
+          height: 12px;
+          width: 12px;
+          display: block;
+          background-color: white;
+          border-radius: 50%;
+          border-color: var(--main-color-grey);
+          border-style: solid;
+          border-width: 1px;
+        }
+
+        .square {
+          content: "";
+          position: absolute;
+          top: 1px;
+          left: 0;
+          height: 12px;
+          width: 12px;
+          display: block;
+          border-color: var(--main-color-grey);
+          border-style: solid;
+          border-width: 1px;
+
+          &:after {
+            content: "";
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            width: 12px;
+            height: 5px;
+            border-left: 2px solid var(--main-color-black);
+            border-bottom: 2px solid var(--main-color-black);
+            transform: rotate(-45deg);
+            opacity: 0;
+          }
+        }
+      }
     }
   }
 }
