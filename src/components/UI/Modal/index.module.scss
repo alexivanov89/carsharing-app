@@ -1,0 +1,27 @@
+.modal {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.9);
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 24px;
+
+    @media screen and (max-width: 480px) {
+      padding: 8px;
+    }
+  }
+}
+
+.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
