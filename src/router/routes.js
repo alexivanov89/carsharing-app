@@ -2,10 +2,12 @@ import { lazy } from 'react';
 
 const MainPage = lazy(() => import('../pages/MainPage/MainPage'));
 const OrderPage = lazy(() => import('../pages/OrderPage/OrderPage'));
+const MyOrderPage = lazy(() => import('../pages/MyOrderPage/MyOrderPage'));
 
 export const routePaths = {
   mainPage: '/',
   orderPage: '/order',
+  myOrderPage: '/myOrder',
   parking: '/parking',
   insurance: '/insurance',
   benzine: '/benzine',
@@ -20,6 +22,12 @@ export const publicRoutes = [
     label: 'Главная',
   },
   { path: routePaths.orderPage, exact: true, component: OrderPage, label: 'Бронирование авто' },
+  {
+    path: `${routePaths.myOrderPage}/:id`,
+    exact: true,
+    component: MyOrderPage,
+    label: 'Мои заказы',
+  },
   {
     path: routePaths.parking,
     exact: true,
