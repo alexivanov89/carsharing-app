@@ -1,0 +1,22 @@
+.button__navigation {
+  padding: 0px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--main-color-grey);
+
+  @media screen and (max-width: 480px) {
+    font-size: 10px;
+  }
+}
+
+.separator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 16px;
+
+  @media screen and (max-width: 480px) {
+    padding: 0px 8px;
+  }
+}
