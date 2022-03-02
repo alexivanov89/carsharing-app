@@ -1,0 +1,98 @@
+.carTotalInfo {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 0px 0px;
+  grid-template-areas: "carInfo carImage";
+
+  @media screen and (max-width: 660px) {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    grid-template-areas:
+      "carInfo"
+      "carImage";
+  }
+
+  .carInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    grid-area: carInfo;
+
+    &__title {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 28px;
+      color: var(--main-color-black);
+      padding-bottom: 8px;
+    }
+  }
+
+  .model {
+    display: flex;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 21px;
+    color: var(--main-color-black);
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+
+  .stateNumberCar {
+    display: flex;
+    padding: 4px 8px;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 400;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    color: var(--main-color-black);
+    border: 1px solid var(--main-color-grey);
+    border-radius: 4px;
+  }
+
+  .fuelQuantity {
+    display: flex;
+    font-size: 18px;
+    line-height: 21px;
+    color: var(--main-color-black);
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+
+    &__title {
+      font-weight: 700;
+    }
+
+    &__value {
+      font-weight: 300;
+    }
+  }
+
+  .accessDate {
+    display: flex;
+    font-size: 18px;
+    line-height: 21px;
+    color: var(--main-color-black);
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+
+    &__title {
+      font-weight: 700;
+    }
+
+    &__value {
+      font-weight: 300;
+    }
+  }
+
+  .carImage {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+}

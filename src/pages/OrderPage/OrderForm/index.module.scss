@@ -1,0 +1,469 @@
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.location {
+  display: flex;
+  flex-direction: column;
+  &__city,
+  &__point {
+    display: flex;
+
+    label {
+      min-width: 100px;
+      display: flex;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      justify-content: flex-end;
+      align-items: center;
+      padding-right: 8px;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 16px;
+      color: var(--main-color-black);
+    }
+  }
+
+  &__city {
+    padding-bottom: 12px;
+  }
+
+  &__map {
+    display: flex;
+    flex-direction: column;
+    padding-top: 45px;
+
+    &__header {
+      padding-bottom: 16px;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 16px;
+      color: var(--main-color-black);
+    }
+    &__body {
+      display: flex;
+      width: 80%;
+      height: 352px;
+
+      @media screen and (max-width: 1024px) {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.car {
+  display: flex;
+  flex-direction: column;
+
+  &__filters {
+    display: flex;
+    .list__filters {
+      display: flex;
+      padding-bottom: 48px;
+
+      @media screen and (max-width: 768px) {
+        padding-bottom: 32px;
+      }
+
+      &__item {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-right: 16px;
+        position: relative;
+
+        .label {
+          cursor: pointer;
+          font-weight: 300;
+          font-size: 14px;
+          line-height: 16px;
+          color: var(--main-color-grey);
+          padding-left: 20px;
+        }
+
+        input {
+          position: absolute;
+          top: 1px;
+          left: 0;
+          opacity: 0;
+          height: 12px;
+          width: 12px;
+          z-index: 10;
+          cursor: pointer;
+        }
+
+        input:checked + label {
+          color: var(--main-color-black);
+        }
+
+        input:checked ~ .circle {
+          border-color: var(--main-color);
+          border-width: 3px;
+        }
+
+        .circle {
+          content: "";
+          position: absolute;
+          top: 1px;
+          left: 0;
+          height: 12px;
+          width: 12px;
+          display: block;
+          background-color: white;
+          border-radius: 50%;
+          border-color: var(--main-color-grey);
+          border-style: solid;
+          border-width: 1px;
+        }
+      }
+    }
+  }
+
+  .wrapper_car__list {
+    display: flex;
+    width: 80%;
+    max-height: calc(100vh - 256px);
+    overflow-y: auto;
+    padding: 5px;
+
+    @media screen and (max-width: 1024px) {
+      width: 100%;
+      max-height: none;
+    }
+  }
+
+  &__list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1px;
+
+    @media screen and (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+
+    &__item {
+      position: relative;
+      z-index: 1;
+      outline: 1px solid var(--main-color-light);
+      width: 100%;
+      height: 224px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      &:hover {
+        outline: 1px solid var(--main-color-grey);
+        cursor: pointer;
+        z-index: 2;
+      }
+
+      @media screen and (max-width: 768px) {
+        padding: 8px;
+      }
+    }
+
+    input {
+      display: none;
+    }
+
+    input:checked + label {
+      outline: 1px solid var(--main-color);
+      z-index: 2;
+    }
+  }
+
+  &__img {
+    display: flex;
+    align-self: flex-end;
+  }
+
+  &__model {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    color: var(--main-color-black);
+    padding-bottom: 8px;
+  }
+
+  &__price {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: var(--main-color-grey);
+  }
+}
+
+.additionally {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  .car__color,
+  .rate,
+  .additionalServices,
+  .rentalDuration {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &__title {
+      display: flex;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 16px;
+      color: var(--main-color-black);
+    }
+
+    .color__list,
+    .rate__list,
+    .additionalServices__list,
+    .rentalDuration__dates {
+      display: flex;
+    }
+
+    .rentalDuration__date {
+      display: flex;
+      align-items: center;
+
+      [class$="react-datepicker-wrapper"] {
+        width: 224px;
+
+        [class$="react-datepicker__close-icon"] {
+          padding: 0px 8px 0px 0px;
+
+          &:after {
+            background-color: #ffffff;
+            color: var(--main-color-black);
+            padding: 0px;
+            font-size: 18px;
+          }
+        }
+      }
+
+      input {
+        border: none;
+        border-bottom: 1px solid var(--main-color-grey);
+        padding-left: 8px;
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 16px;
+        color: var(--main-color-black);
+        width: 224px;
+
+        &:focus-visible {
+          outline: none;
+        }
+      }
+
+      .dateTo,
+      .dateFrom {
+        display: flex;
+        justify-content: flex-end;
+        width: 34px;
+        padding-right: 16px;
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 16px;
+        color: var(--main-color-black);
+      }
+    }
+
+    .rate__list,
+    .additionalServices__list,
+    .rentalDuration__dates {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .color__list {
+      &__item {
+        padding-right: 16px;
+      }
+    }
+
+    .color__list__item,
+    .rate__list__item,
+    .additionalServices__list__item {
+      display: flex;
+      flex-wrap: nowrap;
+      position: relative;
+
+      .label {
+        position: relative;
+        cursor: pointer;
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 16px;
+        color: var(--main-color-grey);
+        padding-left: 20px;
+      }
+
+      input {
+        position: absolute;
+        top: 1px;
+        left: 0;
+        opacity: 0;
+        height: 12px;
+        width: 12px;
+        z-index: 10;
+        cursor: pointer;
+      }
+
+      input:checked + label {
+        color: var(--main-color-black);
+      }
+
+      input:checked ~ .circle {
+        border-color: var(--main-color);
+        border-width: 3px;
+      }
+
+      input:checked ~ .square {
+        border-color: var(--main-color);
+
+        &:after {
+          opacity: 1;
+        }
+      }
+
+      .circle {
+        content: "";
+        position: absolute;
+        top: 1px;
+        left: 0;
+        height: 12px;
+        width: 12px;
+        display: block;
+        background-color: white;
+        border-radius: 50%;
+        border-color: var(--main-color-grey);
+        border-style: solid;
+        border-width: 1px;
+      }
+
+      .square {
+        content: "";
+        position: absolute;
+        top: 1px;
+        left: 0;
+        height: 12px;
+        width: 12px;
+        display: block;
+        border-color: var(--main-color-grey);
+        border-style: solid;
+        border-width: 1px;
+
+        &:after {
+          content: "";
+          position: absolute;
+          top: 1px;
+          left: 1px;
+          width: 12px;
+          height: 5px;
+          border-left: 2px solid var(--main-color-black);
+          border-bottom: 2px solid var(--main-color-black);
+          transform: rotate(-45deg);
+          opacity: 0;
+        }
+      }
+    }
+  }
+}
+
+.select {
+  [class$="-control"] {
+    width: 224px;
+    border: none;
+    border-bottom: 1px solid var(--main-color-grey);
+    border-radius: 0px;
+    box-shadow: none;
+    padding: 2px 0px;
+    min-height: 25px;
+
+    &:hover {
+      border-color: var(--main-color-grey);
+    }
+
+    @media screen and (max-width: 480px) {
+      width: 100%;
+    }
+  }
+
+  [class$="-indicatorSeparator"] {
+    display: none;
+  }
+
+  [class$="-IndicatorsContainer"] {
+    [class$="-indicatorContainer"] {
+      padding: 0px 4px 0px 0px;
+    }
+    [class$="-indicatorContainer"]:last-child {
+      display: none;
+    }
+  }
+
+  [class$="-ValueContainer"] {
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 16px;
+    color: var(--main-color-black);
+    padding: 0px 8px;
+  }
+
+  [class$="-singleValue"] {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  [class$="-Input"] {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  [class$="-placeholder"] {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  [class$="-menu"] {
+    border-radius: 0px;
+    margin: 0px;
+    box-shadow: none;
+    border: 1px solid var(--main-color-light);
+    border-top: none;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 16px;
+    color: var(--main-color-grey);
+
+    [class$="-MenuList"] {
+      max-height: 106px;
+      padding: 0px;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+        background-color: #ffffff;
+        border-left: 1px solid var(--main-color-light);
+        border-right: 1px solid var(--main-color-light);
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        box-shadow: inset 0 0 6px 6px var(--main-color-grey);
+        border: solid 2px transparent;
+      }
+    }
+
+    [class$="-option"] {
+      background-color: #ffffff;
+      padding: 8px;
+
+      &:hover {
+        color: var(--main-color);
+      }
+    }
+  }
+}
