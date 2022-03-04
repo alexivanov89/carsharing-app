@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/carsharing-app/static/css/main.1ba1ac9c.css",
-    "main.js": "/carsharing-app/static/js/main.443aacf1.js",
+    "main.js": "/carsharing-app/static/js/main.79cb2790.js",
     "static/css/653.199ca98e.chunk.css": "/carsharing-app/static/css/653.199ca98e.chunk.css",
     "static/js/653.a7ac6dd0.chunk.js": "/carsharing-app/static/js/653.a7ac6dd0.chunk.js",
     "static/css/870.b74d9a8d.chunk.css": "/carsharing-app/static/css/870.b74d9a8d.chunk.css",
-    "static/js/870.9d7cfe39.chunk.js": "/carsharing-app/static/js/870.9d7cfe39.chunk.js",
+    "static/js/870.5fcf73c8.chunk.js": "/carsharing-app/static/js/870.5fcf73c8.chunk.js",
     "static/css/919.650a9f3c.chunk.css": "/carsharing-app/static/css/919.650a9f3c.chunk.css",
-    "static/js/919.34437a6b.chunk.js": "/carsharing-app/static/js/919.34437a6b.chunk.js",
+    "static/js/919.d62ec3e7.chunk.js": "/carsharing-app/static/js/919.d62ec3e7.chunk.js",
     "static/css/122.5d33b360.chunk.css": "/carsharing-app/static/css/122.5d33b360.chunk.css",
     "static/js/122.622fce2c.chunk.js": "/carsharing-app/static/js/122.622fce2c.chunk.js",
     "static/media/Robotomediumitalic.ttf": "/carsharing-app/static/media/Robotomediumitalic.35abcf5eb54b0c398e52.ttf",
@@ -49,7 +49,6 @@
     "static/media/carImage2.png": "/carsharing-app/static/media/carImage2.178bb297fccb2ec5ed4e.png",
     "static/media/Roboto.woff2": "/carsharing-app/static/media/Roboto.806e04d8241d87f99a68.woff2",
     "static/media/Robotothin.woff2": "/carsharing-app/static/media/Robotothin.30581100ea069d04b86a.woff2",
-    "static/media/carImage1.png": "/carsharing-app/static/media/carImage1.5d78940d72521cddb4a0.png",
     "static/media/Slider2.webp": "/carsharing-app/static/media/Slider2.50253a147893410bec42.webp",
     "static/media/Slider1.webp": "/carsharing-app/static/media/Slider1.b3a61a1d20878c0b7ae4.webp",
     "static/media/map.webp": "/carsharing-app/static/media/map.f7765e04fc83e89ca26d.webp",
@@ -64,18 +63,18 @@
     "static/media/arrow_right_btn.svg": "/carsharing-app/static/media/arrow_right_btn.7591c327fb5160f95b31d713c84e5cc5.svg",
     "static/media/separator.svg": "/carsharing-app/static/media/separator.3f54b55d7d55c4a8870ecaeb995be364.svg",
     "main.1ba1ac9c.css.map": "/carsharing-app/static/css/main.1ba1ac9c.css.map",
-    "main.443aacf1.js.map": "/carsharing-app/static/js/main.443aacf1.js.map",
+    "main.79cb2790.js.map": "/carsharing-app/static/js/main.79cb2790.js.map",
     "653.199ca98e.chunk.css.map": "/carsharing-app/static/css/653.199ca98e.chunk.css.map",
     "653.a7ac6dd0.chunk.js.map": "/carsharing-app/static/js/653.a7ac6dd0.chunk.js.map",
     "870.b74d9a8d.chunk.css.map": "/carsharing-app/static/css/870.b74d9a8d.chunk.css.map",
-    "870.9d7cfe39.chunk.js.map": "/carsharing-app/static/js/870.9d7cfe39.chunk.js.map",
+    "870.5fcf73c8.chunk.js.map": "/carsharing-app/static/js/870.5fcf73c8.chunk.js.map",
     "919.650a9f3c.chunk.css.map": "/carsharing-app/static/css/919.650a9f3c.chunk.css.map",
-    "919.34437a6b.chunk.js.map": "/carsharing-app/static/js/919.34437a6b.chunk.js.map",
+    "919.d62ec3e7.chunk.js.map": "/carsharing-app/static/js/919.d62ec3e7.chunk.js.map",
     "122.5d33b360.chunk.css.map": "/carsharing-app/static/css/122.5d33b360.chunk.css.map",
     "122.622fce2c.chunk.js.map": "/carsharing-app/static/js/122.622fce2c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1ba1ac9c.css",
-    "static/js/main.443aacf1.js"
+    "static/js/main.79cb2790.js"
   ]
 }
