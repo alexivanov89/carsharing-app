@@ -6,14 +6,15 @@ import styles from './index.module.scss';
 
 const NavigationOrder = () => {
   const dispatch = useDispatch();
-  const { currentStep, filledStep } = useSelector(({ orderForm }) => orderForm);
+  const { currentStep, filledStep, pointOfIssue } = useSelector(({ orderForm }) => orderForm);
+  const { city, point } = pointOfIssue;
 
   return (
     <>
       <Button
         classes={styles.button__navigation}
         filled={filledStep > -1}
-        active={currentStep === 0}
+        active={filledStep === -1}
         onClick={() => {
           dispatch(setCurrentStep(0));
         }}
@@ -26,7 +27,7 @@ const NavigationOrder = () => {
       <Button
         classes={styles.button__navigation}
         filled={filledStep > 0}
-        active={currentStep === 1}
+        active={filledStep === 0}
         disabled={filledStep < 0}
         onClick={() => {
           dispatch(setCurrentStep(1));
@@ -40,7 +41,7 @@ const NavigationOrder = () => {
       <Button
         classes={styles.button__navigation}
         filled={filledStep > 1}
-        active={currentStep === 2}
+        active={filledStep === 1}
         disabled={filledStep < 1}
         onClick={() => {
           dispatch(setCurrentStep(2));
@@ -54,7 +55,7 @@ const NavigationOrder = () => {
       <Button
         classes={styles.button__navigation}
         filled={filledStep > 2}
-        active={currentStep === 3}
+        active={filledStep === 2}
         disabled={filledStep < 2}
         onClick={() => {
           dispatch(setCurrentStep(3));

@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 
 const MyOrderPage = () => {
   const { id } = useParams();
-  const { pointOfIssue, car, rentalDuration, rate, price, additionalServices } = useSelector(
+  const { pointOfIssue, carOrder, rentalDuration, rate, price, additionalServices } = useSelector(
     ({ orderForm }) => orderForm,
   );
 
@@ -26,8 +26,8 @@ const MyOrderPage = () => {
   const info = {
     city: city,
     point: point,
-    carModel: car.model,
-    carColor: car.color,
+    carModel: carOrder.carName,
+    carColor: carOrder.color,
     rentalDuration: rentalDuration,
     rate: rate,
     price: price,

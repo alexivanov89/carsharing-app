@@ -18,12 +18,12 @@ const OrderInfo = ({ button, info }) => {
     <>
       <div className={styles.orderInfo__header}>Ваш заказ:</div>
       <div className={styles.orderInfo__params}>
-        {city && point && (
+        {city.label && point.label && (
           <div className={styles.orderInfo__param}>
             <div className={styles.orderInfo__param__name}>Пункт выдачи</div>
             <div className={styles.orderInfo__param__value}>
-              <div className={styles.orderInfo__city}>{`${city},`}</div>
-              <div className={styles.pointOfIssue}>{point}</div>
+              <div className={styles.orderInfo__city}>{`${city.label},`}</div>
+              <div className={styles.pointOfIssue}>{point.label}</div>
             </div>
           </div>
         )}
@@ -89,7 +89,9 @@ const OrderInfo = ({ button, info }) => {
         <p className={styles.orderInfo__price__value}>
           {price.calculated
             ? `${price.calculated} ₽`
-            : `от ${numberWithSpaces(price.min)} до ${numberWithSpaces(price.max)} ₽`}
+            : price.min && price.max
+            ? `от ${numberWithSpaces(price.min)} до ${numberWithSpaces(price.max)} ₽`
+            : null}
         </p>
       </div>
       {button}

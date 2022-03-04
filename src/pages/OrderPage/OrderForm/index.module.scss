@@ -179,6 +179,13 @@
   &__img {
     display: flex;
     align-self: flex-end;
+
+    img {
+      width: 256px;
+      height: 116px;
+      -o-object-fit: cover;
+      object-fit: cover;
+    }
   }
 
   &__model {

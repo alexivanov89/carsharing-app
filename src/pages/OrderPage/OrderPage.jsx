@@ -18,9 +18,9 @@ const OrderPage = () => {
     currentStep,
     filledStep,
     pointOfIssue,
-    car,
+    carOrder,
     rentalDuration,
-    rate,
+    rateOrder,
     price,
     additionalServices,
   } = useSelector(({ orderForm }) => orderForm);
@@ -32,24 +32,24 @@ const OrderPage = () => {
   const onSteps = {
     onStep0: {
       onClick: () => {
-        dispatch(setCurrentStep(currentStep + 1));
-        dispatch(setFilledStep(filledStep + 1));
+        dispatch(setCurrentStep(1));
+        dispatch(setFilledStep(0));
       },
-      disabled: !(city && point),
+      disabled: !(city.value && point.value),
     },
     onStep1: {
       onClick: () => {
-        dispatch(setCurrentStep(currentStep + 1));
-        dispatch(setFilledStep(filledStep + 1));
+        dispatch(setCurrentStep(2));
+        dispatch(setFilledStep(1));
       },
-      disabled: !car.model,
+      disabled: !carOrder.carId,
     },
     onStep2: {
       onClick: () => {
-        dispatch(setCurrentStep(currentStep + 1));
-        dispatch(setFilledStep(filledStep + 1));
+        dispatch(setCurrentStep(3));
+        dispatch(setFilledStep(2));
       },
-      disabled: !(car.color && rentalDuration && rate),
+      disabled: !(carOrder.color && rentalDuration && rateOrder.name),
     },
     onStep3: {
       onClick: () => {
@@ -61,10 +61,10 @@ const OrderPage = () => {
   const info = {
     city: city,
     point: point,
-    carModel: car.model,
-    carColor: car.color,
+    carModel: carOrder.carName,
+    carColor: carOrder.color,
     rentalDuration: rentalDuration,
-    rate: rate,
+    rate: rateOrder.name,
     price: price,
     isFullTank: additionalServices.fullTank,
     isNeedChildChair: additionalServices.babyChair,

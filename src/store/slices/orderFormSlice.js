@@ -4,23 +4,37 @@ const initialState = {
   currentStep: 0,
   filledStep: -1,
   pointOfIssue: {
-    city: 'Ульяновск',
-    point: 'Нариманова, 42',
+    city: {
+      label: '',
+      value: null,
+    },
+    point: {
+      label: '',
+      value: null,
+    },
   },
-  car: {
-    model: 'Hyndai, i30 N',
-    color: 'Голубой',
+  carOrder: {
+    carName: '',
+    colors: [],
+    color: '',
+    carId: null,
+    categoryId: '',
+    stateNumberCar: '',
+    carImage: null,
   },
-  rentalDuration: '1д 2ч',
-  rate: 'На сутки',
+  rentalDuration: '',
+  rateOrder: {
+    name: '',
+    id: null,
+  },
   additionalServices: {
-    fullTank: true,
+    fullTank: false,
     babyChair: false,
     rightHandDrive: false,
   },
   price: {
-    min: 10000,
-    max: 32000,
+    min: null,
+    max: null,
     calculated: null,
   },
 };
@@ -41,17 +55,32 @@ const orderFormSlice = createSlice({
     setPoint: (state, action) => {
       state.pointOfIssue.point = action.payload;
     },
-    setModelCar: (state, action) => {
-      state.car.model = action.payload;
+    setNameCar: (state, action) => {
+      state.carOrder.carName = action.payload;
+    },
+    setStateNumberCar: (state, action) => {
+      state.carOrder.stateNumberCar = action.payload;
+    },
+    setCarImage: (state, action) => {
+      state.carOrder.carImage = action.payload;
+    },
+    setCarId: (state, action) => {
+      state.carOrder.carId = action.payload;
+    },
+    setColorsCar: (state, action) => {
+      state.carOrder.colors = action.payload;
     },
     setColorCar: (state, action) => {
-      state.car.color = action.payload;
+      state.carOrder.color = action.payload;
+    },
+    setCategoryId: (state, action) => {
+      state.carOrder.categoryId = action.payload;
     },
     setRentalDuration: (state, action) => {
       state.rentalDuration = action.payload;
     },
-    setRate: (state, action) => {
-      state.rate = action.payload;
+    setRateOrder: (state, action) => {
+      state.rateOrder = action.payload;
     },
     setFullTank: (state, action) => {
       state.additionalServices.fullTank = action.payload;
@@ -73,10 +102,15 @@ export const {
   setFilledStep,
   setCity,
   setPoint,
-  setModelCar,
+  setNameCar,
+  setStateNumberCar,
+  setCarImage,
+  setColorsCar,
   setColorCar,
+  setCarId,
+  setCategoryId,
   setRentalDuration,
-  setRate,
+  setRateOrder,
   setFullTank,
   setBabyChair,
   setRightHandDrive,
