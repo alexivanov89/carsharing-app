@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/carsharing-app/static/css/main.4319d814.css",
-    "main.js": "/carsharing-app/static/js/main.8c618bff.js",
+    "main.js": "/carsharing-app/static/js/main.c8d657dc.js",
     "static/css/653.199ca98e.chunk.css": "/carsharing-app/static/css/653.199ca98e.chunk.css",
     "static/js/653.a7ac6dd0.chunk.js": "/carsharing-app/static/js/653.a7ac6dd0.chunk.js",
     "static/css/754.4cd5906c.chunk.css": "/carsharing-app/static/css/754.4cd5906c.chunk.css",
-    "static/js/754.0fb13553.chunk.js": "/carsharing-app/static/js/754.0fb13553.chunk.js",
+    "static/js/754.79de32a8.chunk.js": "/carsharing-app/static/js/754.79de32a8.chunk.js",
     "static/css/919.650a9f3c.chunk.css": "/carsharing-app/static/css/919.650a9f3c.chunk.css",
     "static/js/919.d62ec3e7.chunk.js": "/carsharing-app/static/js/919.d62ec3e7.chunk.js",
     "static/css/674.7424626e.chunk.css": "/carsharing-app/static/css/674.7424626e.chunk.css",
@@ -64,11 +64,11 @@
     "static/media/arrow_right_btn.svg": "/carsharing-app/static/media/arrow_right_btn.7591c327fb5160f95b31d713c84e5cc5.svg",
     "static/media/separator.svg": "/carsharing-app/static/media/separator.3f54b55d7d55c4a8870ecaeb995be364.svg",
     "main.4319d814.css.map": "/carsharing-app/static/css/main.4319d814.css.map",
-    "main.8c618bff.js.map": "/carsharing-app/static/js/main.8c618bff.js.map",
+    "main.c8d657dc.js.map": "/carsharing-app/static/js/main.c8d657dc.js.map",
     "653.199ca98e.chunk.css.map": "/carsharing-app/static/css/653.199ca98e.chunk.css.map",
     "653.a7ac6dd0.chunk.js.map": "/carsharing-app/static/js/653.a7ac6dd0.chunk.js.map",
     "754.4cd5906c.chunk.css.map": "/carsharing-app/static/css/754.4cd5906c.chunk.css.map",
-    "754.0fb13553.chunk.js.map": "/carsharing-app/static/js/754.0fb13553.chunk.js.map",
+    "754.79de32a8.chunk.js.map": "/carsharing-app/static/js/754.79de32a8.chunk.js.map",
     "919.650a9f3c.chunk.css.map": "/carsharing-app/static/css/919.650a9f3c.chunk.css.map",
     "919.d62ec3e7.chunk.js.map": "/carsharing-app/static/js/919.d62ec3e7.chunk.js.map",
     "674.7424626e.chunk.css.map": "/carsharing-app/static/css/674.7424626e.chunk.css.map",
@@ -76,6 +76,6 @@
   },
   "entrypoints": [
     "static/css/main.4319d814.css",
-    "static/js/main.8c618bff.js"
+    "static/js/main.c8d657dc.js"
   ]
 }
