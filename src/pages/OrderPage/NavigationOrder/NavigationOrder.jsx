@@ -13,8 +13,8 @@ const NavigationOrder = () => {
     <>
       <Button
         classes={styles.button__navigation}
-        filled={filledStep > -1}
-        active={filledStep === -1}
+        filled={filledStep >= -1}
+        active={currentStep === 0}
         onClick={() => {
           dispatch(setCurrentStep(0));
         }}
@@ -26,8 +26,8 @@ const NavigationOrder = () => {
       </div>
       <Button
         classes={styles.button__navigation}
-        filled={filledStep > 0}
-        active={filledStep === 0}
+        filled={filledStep >= 0}
+        active={currentStep === 1}
         disabled={filledStep < 0}
         onClick={() => {
           dispatch(setCurrentStep(1));
@@ -40,8 +40,8 @@ const NavigationOrder = () => {
       </div>
       <Button
         classes={styles.button__navigation}
-        filled={filledStep > 1}
-        active={filledStep === 1}
+        filled={filledStep >= 1}
+        active={currentStep === 2}
         disabled={filledStep < 1}
         onClick={() => {
           dispatch(setCurrentStep(2));
@@ -54,8 +54,8 @@ const NavigationOrder = () => {
       </div>
       <Button
         classes={styles.button__navigation}
-        filled={filledStep > 2}
-        active={filledStep === 2}
+        filled={filledStep >= 2}
+        active={currentStep === 3}
         disabled={filledStep < 2}
         onClick={() => {
           dispatch(setCurrentStep(3));

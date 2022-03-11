@@ -8,10 +8,9 @@ import format from 'date-fns/format';
 import ReactSelect from 'react-select';
 import { CarTotalInfo } from '../../../components/CarTotalInfo';
 import { numberWithSpaces } from '../../../utils/numberWithSpaces';
-import Map from '../../../assets/img/map.webp';
-import './select.scss';
-import 'react-datepicker/dist/react-datepicker.css';
-import styles from './index.module.scss';
+import MapImg from '../../../assets/img/map.webp';
+import Image from '../../../components/UI/Image/Image';
+import NoFoto from '../../../assets/img/noFoto.jpg';
 import {
   fetchCarAsync,
   fetchCategoryAsync,
@@ -38,6 +37,10 @@ import {
   setRightHandDrive,
   setStateNumberCar,
 } from '../../../store/slices/orderFormSlice';
+import './select.scss';
+import 'react-datepicker/dist/react-datepicker.css';
+import styles from './index.module.scss';
+import { Ymap } from '../../../components/Ymap';
 
 const OrderForm = () => {
   const dispatch = useDispatch();
@@ -48,6 +51,7 @@ const OrderForm = () => {
   const [filterByCityId, setFilterByCityId] = useState(null);
   const [filterByCategory, setfilterByCategory] = useState('');
   const selectPointRef = useRef();
+  const [center, setCenter] = useState('Ульяновск');
 
   const preparePriceMin = () => {
     if (!car.cars.length) {
@@ -73,6 +77,20 @@ const OrderForm = () => {
         .filter(({ cityId }) => cityId)
         .filter(({ cityId }) => cityId.id === filterByCityId)
         .map(({ address, id }) => ({ value: id, label: address }));
+    }
+
+    return point.points.filter(({ cityId }) => cityId);
+  };
+
+  const placeMarks = () => {
+    if (!point.points.length) {
+      return null;
+    }
+
+    if (filterByCityId) {
+      return point.points
+        .filter(({ cityId }) => cityId)
+        .filter(({ cityId }) => cityId.id === filterByCityId);
     }
 
     return point.points.filter(({ cityId }) => cityId);
@@ -131,7 +149,7 @@ const OrderForm = () => {
         calculated: null,
       }),
     );
-  }, [dispatch]);
+  }, []);
 
   const onSubmit = (data) => {};
   return (
@@ -163,6 +181,7 @@ const OrderForm = () => {
                     if (option && option.value) {
                       setFilterByCityId(option.value);
                       dispatch(setCity(option));
+                      setCenter(option.label);
                     }
                   }}
                   className={styles.select}
@@ -194,6 +213,7 @@ const OrderForm = () => {
 
                     if (option && option.value) {
                       dispatch(setPoint(option));
+                      setCenter(`${pointOfIssue.city.label}, ${option.label}`);
                     }
                   }}
                   className={styles.select}
@@ -206,12 +226,9 @@ const OrderForm = () => {
           </div>
           <div className={styles.location__map}>
             <p className={styles.location__map__header}>Выбрать на карте:</p>
-            <div
-              className={styles.location__map__body}
-              style={{
-                background: `url(${Map}) center / cover no-repeat `,
-              }}
-            ></div>
+            <div className={styles.location__map__body}>
+              <Ymap placeMarks={placeMarks()} center={center} />
+            </div>
           </div>
         </section>
       )}
@@ -265,11 +282,16 @@ const OrderForm = () => {
                 ))}
             </ul>
           </div>
-
           <div className={styles.wrapper_car__list}>
+            {car.loading && (
+              <div className={styles.loader}>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            )}
+            {car.error && <div>Error</div>}
             <div className={styles.car__list}>
-              {car.loading && <div>Loading</div>}
-              {car.error && <div>Error</div>}
               {!car.loading &&
                 !car.error &&
                 car.cars.length > 0 &&
@@ -325,7 +347,7 @@ const OrderForm = () => {
                           </div>
                         </div>
                         <div className={styles.car__img}>
-                          <img src={thumbnail.path} alt={thumbnail.originalname} loading="lazy" />
+                          <Image src={thumbnail.path} alt={name} fallback={NoFoto} loading="lazy" />
                         </div>
                       </label>
                     </Fragment>
