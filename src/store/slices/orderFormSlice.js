@@ -22,10 +22,15 @@ const initialState = {
     stateNumberCar: '',
     carImage: null,
   },
-  rentalDuration: '',
+  rentalDuration: {
+    label: '',
+    value: null,
+  },
   rateOrder: {
     name: '',
     id: null,
+    unit: '',
+    price: 0,
   },
   additionalServices: {
     fullTank: false,
@@ -91,8 +96,14 @@ const orderFormSlice = createSlice({
     setRightHandDrive: (state, action) => {
       state.additionalServices.rightHandDrive = action.payload;
     },
-    setPrice: (state, action) => {
-      state.price = action.payload;
+    setPriceMin: (state, action) => {
+      state.price.min = action.payload;
+    },
+    setPriceMax: (state, action) => {
+      state.price.max = action.payload;
+    },
+    setPriceCalculated: (state, action) => {
+      state.price.calculated = action.payload;
     },
   },
 });
@@ -114,7 +125,9 @@ export const {
   setFullTank,
   setBabyChair,
   setRightHandDrive,
-  setPrice,
+  setPriceMin,
+  setPriceMax,
+  setPriceCalculated,
 } = orderFormSlice.actions;
 
 export const orderFormReducer = orderFormSlice.reducer;

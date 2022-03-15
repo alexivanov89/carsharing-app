@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
@@ -8,7 +8,6 @@ import format from 'date-fns/format';
 import ReactSelect from 'react-select';
 import { CarTotalInfo } from '../../../components/CarTotalInfo';
 import { numberWithSpaces } from '../../../utils/numberWithSpaces';
-import MapImg from '../../../assets/img/map.webp';
 import Image from '../../../components/UI/Image/Image';
 import NoFoto from '../../../assets/img/noFoto.jpg';
 import {
@@ -31,7 +30,9 @@ import {
   setFullTank,
   setNameCar,
   setPoint,
-  setPrice,
+  setPriceCalculated,
+  setPriceMax,
+  setPriceMin,
   setRateOrder,
   setRentalDuration,
   setRightHandDrive,
@@ -44,14 +45,21 @@ import { Ymap } from '../../../components/Ymap';
 
 const OrderForm = () => {
   const dispatch = useDispatch();
-  const { currentStep, pointOfIssue, carOrder, rateOrder, additionalServices } = useSelector(
-    ({ orderForm }) => orderForm,
-  );
+  const {
+    currentStep,
+    pointOfIssue,
+    carOrder,
+    rateOrder,
+    price,
+    rentalDuration,
+    additionalServices,
+  } = useSelector(({ orderForm }) => orderForm);
   const { point, car, category, rate } = useSelector(({ table }) => table);
   const [filterByCityId, setFilterByCityId] = useState(null);
   const [filterByCategory, setfilterByCategory] = useState('');
   const selectPointRef = useRef();
   const [center, setCenter] = useState('Ульяновск');
+  const [priceCalc, setPriceCalc] = useState(0);
 
   const preparePriceMin = () => {
     if (!car.cars.length) {
@@ -114,8 +122,14 @@ const OrderForm = () => {
 
   const rangeTime = () => {
     if (startDate && endDate) {
-      const value = intervalToDuration({ start: startDate, end: endDate });
-      dispatch(setRentalDuration(`${value.days}д ${value.hours}ч ${value.minutes}м`));
+      const interval = intervalToDuration({ start: startDate, end: endDate });
+      const milliseconds = endDate.getTime() - startDate.getTime();
+      dispatch(
+        setRentalDuration({
+          label: `${interval.days}д ${interval.hours}ч ${interval.minutes}м`,
+          value: milliseconds,
+        }),
+      );
     }
   };
 
@@ -142,14 +156,72 @@ const OrderForm = () => {
   }, [filterByCategory]);
 
   useEffect(() => {
-    dispatch(
-      setPrice({
-        min: preparePriceMin(),
-        max: preparePriceMax(),
-        calculated: null,
-      }),
-    );
+    dispatch(setPriceMin(preparePriceMin()));
   }, []);
+
+  useEffect(() => {
+    dispatch(setPriceMax(preparePriceMax()));
+  }, []);
+
+  const getPriceCalc = useCallback(() => {
+    switch (rateOrder.unit) {
+      case 'сутки':
+        setPriceCalc(rateOrder.price * Math.ceil(rentalDuration.value / (1000 * 60 * 60 * 24)));
+        break;
+      case '7 дней':
+        setPriceCalc(rateOrder.price * Math.ceil(rentalDuration.value / (1000 * 60 * 60 * 24 * 7)));
+        break;
+      case '30 дней':
+        setPriceCalc(
+          rateOrder.price * Math.ceil(rentalDuration.value / (1000 * 60 * 60 * 24 * 30)),
+        );
+        break;
+      case 'мин':
+        setPriceCalc(rateOrder.price * Math.ceil(rentalDuration.value / (1000 * 60)));
+        break;
+      default:
+        break;
+    }
+
+    if (additionalServices.fullTank) {
+      setPriceCalc((prevPrice) => prevPrice + 500);
+    }
+
+    if (additionalServices.babyChair) {
+      setPriceCalc((prevPrice) => prevPrice + 200);
+    }
+
+    if (additionalServices.rightHandDrive) {
+      setPriceCalc((prevPrice) => prevPrice + 1600);
+    }
+  }, [
+    rateOrder.price,
+    rateOrder.unit,
+    rentalDuration.value,
+    additionalServices.fullTank,
+    additionalServices.babyChair,
+    additionalServices.rightHandDrive,
+  ]);
+
+  useEffect(() => {
+    getPriceCalc();
+
+    if (priceCalc < price.min) {
+      dispatch(setPriceCalculated(price.min));
+    } else if (priceCalc > price.max) {
+      dispatch(setPriceCalculated(price.max));
+    } else {
+      dispatch(setPriceCalculated(priceCalc));
+    }
+  }, [
+    priceCalc,
+    rateOrder.price,
+    rateOrder.unit,
+    rentalDuration.value,
+    additionalServices.fullTank,
+    additionalServices.babyChair,
+    additionalServices.rightHandDrive,
+  ]);
 
   const onSubmit = (data) => {};
   return (
@@ -324,13 +396,8 @@ const OrderForm = () => {
                           dispatch(setCarImage(thumbnail.path));
                           setStartDate(new Date());
                           setEndDate(null);
-                          dispatch(
-                            setPrice({
-                              min: priceMin,
-                              max: priceMax,
-                              calculated: null,
-                            }),
-                          );
+                          dispatch(setPriceMin(priceMin));
+                          dispatch(setPriceMax(priceMax));
                           dispatch(setColorCar(''));
                           dispatch(setFilledStep(0));
                           dispatch(setRateOrder({ name: '', id: null }));
@@ -374,6 +441,7 @@ const OrderForm = () => {
                     onChange={() => {}}
                     onClick={() => {
                       dispatch(setColorCar('Любой'));
+                      dispatch(setFilledStep(1));
                     }}
                   />
                   <label htmlFor="allColor" className={styles.label}>
@@ -396,6 +464,7 @@ const OrderForm = () => {
                       onChange={() => {}}
                       onClick={() => {
                         dispatch(setColorCar(color));
+                        dispatch(setFilledStep(1));
                       }}
                     />
                     <label htmlFor={color} className={styles.label}>
@@ -417,7 +486,12 @@ const OrderForm = () => {
                   onChange={(date) => {
                     setStartDate(date);
                     dispatch(setFilledStep(1));
-                    dispatch(setRentalDuration(''));
+                    dispatch(
+                      setRentalDuration({
+                        label: '',
+                        value: null,
+                      }),
+                    );
                   }}
                   selectsStart
                   startDate={startDate}
@@ -441,7 +515,12 @@ const OrderForm = () => {
                   onChange={(date) => {
                     setEndDate(date);
                     dispatch(setFilledStep(1));
-                    dispatch(setRentalDuration(''));
+                    dispatch(
+                      setRentalDuration({
+                        label: '',
+                        value: null,
+                      }),
+                    );
                   }}
                   selectsEnd
                   startDate={startDate}
@@ -476,7 +555,15 @@ const OrderForm = () => {
                       checked={id === rateOrder.id}
                       onChange={() => {}}
                       onClick={() => {
-                        dispatch(setRateOrder({ name: rateTypeId.name, id: id }));
+                        dispatch(setFilledStep(1));
+                        dispatch(
+                          setRateOrder({
+                            name: rateTypeId.name,
+                            id: id,
+                            unit: rateTypeId.unit,
+                            price: price,
+                          }),
+                        );
                       }}
                     />
                     <label htmlFor={id} className={styles.label}>
@@ -500,6 +587,7 @@ const OrderForm = () => {
                   checked={additionalServices.fullTank === true}
                   onChange={() => {}}
                   onClick={() => {
+                    dispatch(setFilledStep(1));
                     dispatch(setFullTank(!additionalServices.fullTank));
                   }}
                 />
@@ -518,6 +606,7 @@ const OrderForm = () => {
                   checked={additionalServices.babyChair === true}
                   onChange={() => {}}
                   onClick={() => {
+                    dispatch(setFilledStep(1));
                     dispatch(setBabyChair(!additionalServices.babyChair));
                   }}
                 />
@@ -536,6 +625,7 @@ const OrderForm = () => {
                   checked={additionalServices.rightHandDrive === true}
                   onChange={() => {}}
                   onClick={() => {
+                    dispatch(setFilledStep(1));
                     dispatch(setRightHandDrive(!additionalServices.rightHandDrive));
                   }}
                 />

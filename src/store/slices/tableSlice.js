@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { tableService } from '../../services/tableService';
-import { setPrice } from './orderFormSlice';
+import { setPriceMax, setPriceMin } from './orderFormSlice';
 
 const initialState = {
   city: {
@@ -58,13 +58,8 @@ export const fetchCarAsync = createAsyncThunk('table/fetchCar', async (options, 
     return Math.max(...cars.map(({ priceMax }) => priceMax));
   };
 
-  thunkAPI.dispatch(
-    setPrice({
-      min: preparePriceMin(),
-      max: preparePriceMax(),
-      calculated: null,
-    }),
-  );
+  thunkAPI.dispatch(setPriceMin(preparePriceMin()));
+  thunkAPI.dispatch(setPriceMax(preparePriceMax()));
   return response.data.data;
 });
 

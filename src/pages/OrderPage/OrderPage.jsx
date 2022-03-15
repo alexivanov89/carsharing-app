@@ -49,7 +49,7 @@ const OrderPage = () => {
         dispatch(setCurrentStep(3));
         dispatch(setFilledStep(2));
       },
-      disabled: !(carOrder.color && rentalDuration && rateOrder.name),
+      disabled: !(carOrder.color && rentalDuration.value && rateOrder.id),
     },
     onStep3: {
       onClick: () => {

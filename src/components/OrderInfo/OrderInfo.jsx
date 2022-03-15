@@ -43,11 +43,11 @@ const OrderInfo = ({ button, info }) => {
             </div>
           </div>
         )}
-        {rentalDuration && (
+        {rentalDuration.label && (
           <div className={styles.orderInfo__param}>
             <div className={styles.orderInfo__param__name}>Длительность аренды</div>
             <div className={styles.orderInfo__param__value}>
-              <div className={styles.orderInfo__rentalDuration}>{rentalDuration}</div>
+              <div className={styles.orderInfo__rentalDuration}>{rentalDuration.label}</div>
             </div>
           </div>
         )}
@@ -88,7 +88,7 @@ const OrderInfo = ({ button, info }) => {
         <p className={styles.orderInfo__price__label}>Цена:&nbsp;</p>
         <p className={styles.orderInfo__price__value}>
           {price.calculated
-            ? `${price.calculated} ₽`
+            ? `${numberWithSpaces(price.calculated)} ₽`
             : price.min && price.max
             ? `от ${numberWithSpaces(price.min)} до ${numberWithSpaces(price.max)} ₽`
             : null}
