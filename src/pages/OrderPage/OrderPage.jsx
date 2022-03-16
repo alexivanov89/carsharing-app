@@ -7,7 +7,9 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderForm from './OrderForm/OrderForm';
 import { OrderInfo } from '../../components/OrderInfo';
 import NavigationOrder from './NavigationOrder/NavigationOrder';
-import { setCurrentStep, setFilledStep } from '../../store/slices/orderFormSlice';
+import { setCurrentStep, setFilledStep, setOrderStatus } from '../../store/slices/orderFormSlice';
+import { setMyOrder } from '../../store/slices/myOrder';
+import { tableService } from '../../services/tableService';
 import { routePaths } from '../../router/routes';
 import { renderButton } from './utils/renderButton';
 import styles from './index.module.scss';
@@ -16,13 +18,15 @@ const OrderPage = () => {
   const dispatch = useDispatch();
   const {
     currentStep,
-    filledStep,
     pointOfIssue,
     carOrder,
     rentalDuration,
     rateOrder,
     price,
     additionalServices,
+    dateFrom,
+    dateTo,
+    orderStatus,
   } = useSelector(({ orderForm }) => orderForm);
   const history = useHistory();
 
@@ -42,7 +46,7 @@ const OrderPage = () => {
         dispatch(setCurrentStep(2));
         dispatch(setFilledStep(1));
       },
-      disabled: !carOrder.carId,
+      disabled: !carOrder.car.id,
     },
     onStep2: {
       onClick: () => {
@@ -53,6 +57,12 @@ const OrderPage = () => {
     },
     onStep3: {
       onClick: () => {
+        dispatch(
+          setOrderStatus({
+            name: 'Новые',
+            id: '5e26a191099b810b946c5d89',
+          }),
+        );
         setModalActive(true);
       },
     },
@@ -61,10 +71,10 @@ const OrderPage = () => {
   const info = {
     city: city,
     point: point,
-    carModel: carOrder.carName,
+    carModel: carOrder.car.name,
     carColor: carOrder.color,
     rentalDuration: rentalDuration,
-    rate: rateOrder.name,
+    rate: rateOrder.rateTypeId.name,
     price: price,
     isFullTank: additionalServices.fullTank,
     isNeedChildChair: additionalServices.babyChair,
@@ -84,7 +94,35 @@ const OrderPage = () => {
           <Button
             classes={styles.button__confirm}
             onClick={() => {
-              history.push(`${routePaths.myOrderPage}/RU58491823`);
+              const body = {
+                orderStatusId: orderStatus,
+                cityId: {
+                  name: pointOfIssue.city.label,
+                  id: pointOfIssue.city.value,
+                },
+                pointId: {
+                  address: pointOfIssue.point.label,
+                  name: pointOfIssue.point.name,
+                  id: pointOfIssue.point.value,
+                },
+                carId: carOrder.car,
+                color: carOrder.color,
+                dateFrom: dateFrom,
+                dateTo: dateTo,
+                rateId: rateOrder,
+                price: price.calculated,
+                isFullTank: additionalServices.fullTank,
+                isNeedChildChair: additionalServices.babyChair,
+                isRightWheel: additionalServices.rightHandDrive,
+              };
+
+              tableService
+                .postOrder(body)
+                .then((res) => {
+                  const order = res.data.data;
+                  history.push(`${routePaths.myOrderPage}/${order.id}`);
+                })
+                .catch((e) => console.log(e));
             }}
           >
             Подтвердить

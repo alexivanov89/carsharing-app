@@ -11,26 +11,42 @@ const initialState = {
     point: {
       label: '',
       value: null,
+      name: '',
     },
   },
   carOrder: {
-    carName: '',
-    colors: [],
     color: '',
-    carId: null,
-    categoryId: '',
-    stateNumberCar: '',
-    carImage: null,
+    car: {
+      description: '',
+      priceMin: 0,
+      priceMax: 0,
+      name: '',
+      number: '',
+      categoryId: {
+        name: '',
+        description: '',
+        id: null,
+      },
+      thumbnail: {},
+      tank: null,
+      colors: [],
+      id: null,
+    },
   },
+  dateTo: null,
+  dateFrom: null,
   rentalDuration: {
     label: '',
     value: null,
   },
   rateOrder: {
-    name: '',
     id: null,
-    unit: '',
     price: 0,
+    rateTypeId: {
+      unit: '',
+      name: '',
+      id: '',
+    },
   },
   additionalServices: {
     fullTank: false,
@@ -41,6 +57,10 @@ const initialState = {
     min: null,
     max: null,
     calculated: null,
+  },
+  orderStatus: {
+    name: '',
+    id: null,
   },
 };
 
@@ -60,29 +80,20 @@ const orderFormSlice = createSlice({
     setPoint: (state, action) => {
       state.pointOfIssue.point = action.payload;
     },
-    setNameCar: (state, action) => {
-      state.carOrder.carName = action.payload;
-    },
-    setStateNumberCar: (state, action) => {
-      state.carOrder.stateNumberCar = action.payload;
-    },
-    setCarImage: (state, action) => {
-      state.carOrder.carImage = action.payload;
-    },
-    setCarId: (state, action) => {
-      state.carOrder.carId = action.payload;
-    },
-    setColorsCar: (state, action) => {
-      state.carOrder.colors = action.payload;
+    setCar: (state, action) => {
+      state.carOrder.car = action.payload;
     },
     setColorCar: (state, action) => {
       state.carOrder.color = action.payload;
     },
-    setCategoryId: (state, action) => {
-      state.carOrder.categoryId = action.payload;
-    },
     setRentalDuration: (state, action) => {
       state.rentalDuration = action.payload;
+    },
+    setDateTo: (state, action) => {
+      state.dateTo = action.payload;
+    },
+    setDateFrom: (state, action) => {
+      state.dateFrom = action.payload;
     },
     setRateOrder: (state, action) => {
       state.rateOrder = action.payload;
@@ -105,6 +116,9 @@ const orderFormSlice = createSlice({
     setPriceCalculated: (state, action) => {
       state.price.calculated = action.payload;
     },
+    setOrderStatus: (state, action) => {
+      state.orderStatus = action.payload;
+    },
   },
 });
 
@@ -113,14 +127,11 @@ export const {
   setFilledStep,
   setCity,
   setPoint,
-  setNameCar,
-  setStateNumberCar,
-  setCarImage,
-  setColorsCar,
+  setCar,
   setColorCar,
-  setCarId,
-  setCategoryId,
   setRentalDuration,
+  setDateTo,
+  setDateFrom,
   setRateOrder,
   setFullTank,
   setBabyChair,
@@ -128,6 +139,7 @@ export const {
   setPriceMin,
   setPriceMax,
   setPriceCalculated,
+  setOrderStatus,
 } = orderFormSlice.actions;
 
 export const orderFormReducer = orderFormSlice.reducer;

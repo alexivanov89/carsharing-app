@@ -20,6 +20,7 @@ const initialState = {
   },
   category: {
     categories: [],
+    categoryActiveId: null,
     loading: false,
     error: false,
   },
@@ -76,7 +77,11 @@ export const fetchRateAsync = createAsyncThunk('table/fetchRate', async () => {
 const tableSlice = createSlice({
   name: 'table',
   initialState,
-  reducers: {},
+  reducers: {
+    setCategoryActiveId: (state, action) => {
+      state.category.categoryActiveId = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCityAsync.pending, (state) => {
@@ -146,5 +151,7 @@ const tableSlice = createSlice({
       });
   },
 });
+
+export const { setCategoryActiveId } = tableSlice.actions;
 
 export const tableReducer = tableSlice.reducer;

@@ -1,5 +1,4 @@
-import { Fragment, useCallback, useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Fragment, useCallback, useRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import ruLocale from 'date-fns/locale/ru';
@@ -7,28 +6,27 @@ import intervalToDuration from 'date-fns/intervalToDuration';
 import format from 'date-fns/format';
 import ReactSelect from 'react-select';
 import { CarTotalInfo } from '../../../components/CarTotalInfo';
-import { numberWithSpaces } from '../../../utils/numberWithSpaces';
 import Image from '../../../components/UI/Image/Image';
 import NoFoto from '../../../assets/img/noFoto.jpg';
+import { Ymap } from '../../../components/Ymap';
+import { numberWithSpaces } from '../../../utils/numberWithSpaces';
+import { sortList } from '../utils/sortList';
 import {
+  setCategoryActiveId,
   fetchCarAsync,
   fetchCategoryAsync,
   fetchPointAsync,
   fetchRateAsync,
 } from '../../../store/slices/tableSlice';
-import { sortList } from '../utils/sortList';
-import { useRef } from 'react';
 import {
   setBabyChair,
-  setCarId,
-  setCarImage,
-  setCategoryId,
+  setCar,
   setCity,
   setColorCar,
-  setColorsCar,
+  setDateFrom,
+  setDateTo,
   setFilledStep,
   setFullTank,
-  setNameCar,
   setPoint,
   setPriceCalculated,
   setPriceMax,
@@ -36,12 +34,10 @@ import {
   setRateOrder,
   setRentalDuration,
   setRightHandDrive,
-  setStateNumberCar,
 } from '../../../store/slices/orderFormSlice';
 import './select.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 import styles from './index.module.scss';
-import { Ymap } from '../../../components/Ymap';
 
 const OrderForm = () => {
   const dispatch = useDispatch();
@@ -84,7 +80,7 @@ const OrderForm = () => {
       return point.points
         .filter(({ cityId }) => cityId)
         .filter(({ cityId }) => cityId.id === filterByCityId)
-        .map(({ address, id }) => ({ value: id, label: address }));
+        .map(({ address, id, name }) => ({ value: id, label: address, name: name }));
     }
 
     return point.points.filter(({ cityId }) => cityId);
@@ -116,7 +112,6 @@ const OrderForm = () => {
     }
   };
 
-  const { handleSubmit, reset, setValue, control } = useForm();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
 
@@ -135,13 +130,17 @@ const OrderForm = () => {
 
   useEffect(() => {
     rangeTime();
+    if (startDate) {
+      dispatch(setDateFrom(startDate.getTime()));
+    }
+    if (endDate) {
+      dispatch(setDateTo(endDate.getTime()));
+    }
   }, [startDate, endDate]);
 
   const carTotalInfo = {
-    carModel: carOrder.carName,
-    stateNumberCar: carOrder.stateNumberCar,
+    car: carOrder.car,
     isFullTank: additionalServices.fullTank,
-    carImage: carOrder.carImage,
     accessDate: format(startDate, 'dd.MM.yyyy k:mm'),
   };
 
@@ -164,7 +163,7 @@ const OrderForm = () => {
   }, []);
 
   const getPriceCalc = useCallback(() => {
-    switch (rateOrder.unit) {
+    switch (rateOrder.rateTypeId.unit) {
       case 'сутки':
         setPriceCalc(rateOrder.price * Math.ceil(rentalDuration.value / (1000 * 60 * 60 * 24)));
         break;
@@ -196,7 +195,7 @@ const OrderForm = () => {
     }
   }, [
     rateOrder.price,
-    rateOrder.unit,
+    rateOrder.rateTypeId.unit,
     rentalDuration.value,
     additionalServices.fullTank,
     additionalServices.babyChair,
@@ -216,84 +215,145 @@ const OrderForm = () => {
   }, [
     priceCalc,
     rateOrder.price,
-    rateOrder.unit,
+    rateOrder.rateTypeId.unit,
     rentalDuration.value,
     additionalServices.fullTank,
     additionalServices.babyChair,
     additionalServices.rightHandDrive,
   ]);
 
-  const onSubmit = (data) => {};
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+    <form className={styles.form}>
       {currentStep === 0 && (
         <section className={styles.location}>
           <div className={styles.location__city}>
             <label>Город</label>
-            <Controller
-              name="city"
-              control={control}
-              render={({ field }) => (
-                <ReactSelect
-                  id="city"
-                  placeholder={'Начните вводить город ...'}
-                  isClearable
-                  {...field}
-                  options={cityPreparePoint()}
-                  onChange={(option, { action }) => {
-                    if (action === 'clear') {
-                      setFilterByCityId(null);
-                      dispatch(setCity(''));
-                      selectPointRef.current.clearValue();
-                      dispatch(setNameCar(''));
-                      dispatch(setCarId(null));
-                      dispatch(setFilledStep(-1));
-                    }
+            <ReactSelect
+              id="city"
+              placeholder={'Начните вводить город ...'}
+              isClearable
+              options={cityPreparePoint()}
+              onChange={(option, { action }) => {
+                if (action === 'clear') {
+                  setFilterByCityId(null);
+                  dispatch(setCity(''));
+                  selectPointRef.current.clearValue();
+                  dispatch(
+                    setCar({
+                      description: '',
+                      priceMin: 0,
+                      priceMax: 0,
+                      name: '',
+                      number: '',
+                      categoryId: {},
+                      thumbnail: {},
+                      tank: null,
+                      colors: [],
+                      id: null,
+                    }),
+                  );
+                  dispatch(setColorCar(''));
+                  dispatch(setFilledStep(-1));
+                  dispatch(
+                    setRateOrder({
+                      id: null,
+                      price: 0,
+                      rateTypeId: {
+                        unit: '',
+                        name: '',
+                        id: '',
+                      },
+                    }),
+                  );
+                  dispatch(setFullTank(false));
+                  dispatch(setBabyChair(false));
+                  dispatch(setRightHandDrive(false));
+                  setStartDate(new Date());
+                  setEndDate(null);
+                  dispatch(setPriceMin(preparePriceMin()));
+                  dispatch(setPriceMax(preparePriceMax()));
+                  dispatch(
+                    setRentalDuration({
+                      label: '',
+                      value: null,
+                    }),
+                  );
+                  dispatch(setPriceCalculated(null));
+                }
 
-                    if (option && option.value) {
-                      setFilterByCityId(option.value);
-                      dispatch(setCity(option));
-                      setCenter(option.label);
-                    }
-                  }}
-                  className={styles.select}
-                  classNamePrefix="select"
-                  value={pointOfIssue.city.value ? pointOfIssue.city : null}
-                />
-              )}
+                if (option && option.value) {
+                  setFilterByCityId(option.value);
+                  dispatch(setCity(option));
+                  setCenter(option.label);
+                }
+              }}
+              className={styles.select}
+              classNamePrefix="select"
+              value={pointOfIssue.city.value ? pointOfIssue.city : null}
             />
           </div>
           <div className={styles.location__point}>
             <label>Пункт выдачи</label>
-            <Controller
-              name="point"
-              control={control}
-              render={({ field }) => (
-                <ReactSelect
-                  id="point"
-                  placeholder={'Начните вводить пункт ...'}
-                  isClearable
-                  {...field}
-                  options={preparePoint()}
-                  onChange={(option, { action }) => {
-                    if (action === 'clear') {
-                      dispatch(setPoint(''));
-                      dispatch(setNameCar(''));
-                      dispatch(setCarId(null));
-                      dispatch(setFilledStep(-1));
-                    }
+            <ReactSelect
+              id="point"
+              placeholder={'Начните вводить пункт ...'}
+              isClearable
+              options={preparePoint()}
+              onChange={(option, { action }) => {
+                if (action === 'clear') {
+                  dispatch(setPoint(''));
+                  dispatch(
+                    setCar({
+                      description: '',
+                      priceMin: 0,
+                      priceMax: 0,
+                      name: '',
+                      number: '',
+                      categoryId: {},
+                      thumbnail: {},
+                      tank: null,
+                      colors: [],
+                      id: null,
+                    }),
+                  );
+                  dispatch(setColorCar(''));
+                  dispatch(setFilledStep(-1));
+                  dispatch(
+                    setRateOrder({
+                      id: null,
+                      price: 0,
+                      rateTypeId: {
+                        unit: '',
+                        name: '',
+                        id: '',
+                      },
+                    }),
+                  );
+                  dispatch(setFullTank(false));
+                  dispatch(setBabyChair(false));
+                  dispatch(setRightHandDrive(false));
+                  setStartDate(new Date());
+                  setEndDate(null);
+                  dispatch(setPriceMin(preparePriceMin()));
+                  dispatch(setPriceMax(preparePriceMax()));
+                  dispatch(
+                    setRentalDuration({
+                      label: '',
+                      value: null,
+                    }),
+                  );
+                  dispatch(setPriceCalculated(null));
+                }
 
-                    if (option && option.value) {
-                      dispatch(setPoint(option));
-                      setCenter(`${pointOfIssue.city.label}, ${option.label}`);
-                    }
-                  }}
-                  className={styles.select}
-                  classNamePrefix="select"
-                  ref={selectPointRef}
-                  value={pointOfIssue.point.value ? pointOfIssue.point : null}
-                />
-              )}
+                if (option && option.value) {
+                  dispatch(setPoint(option));
+                  setCenter(`${pointOfIssue.city.label}, ${option.label}`);
+                }
+              }}
+              className={styles.select}
+              classNamePrefix="select"
+              ref={selectPointRef}
+              value={pointOfIssue.point.value ? pointOfIssue.point : null}
             />
           </div>
           <div className={styles.location__map}>
@@ -315,11 +375,11 @@ const OrderForm = () => {
                   name="choiceFilterCar"
                   id="allCar"
                   value={''}
-                  checked={'' === carOrder.categoryId}
+                  checked={!category.categoryActiveId}
                   onChange={() => {}}
                   onClick={() => {
                     setfilterByCategory('');
-                    dispatch(setCategoryId(''));
+                    dispatch(setCategoryActiveId(null));
                   }}
                 />
                 <label htmlFor="allCar" className={styles.label}>
@@ -339,11 +399,11 @@ const OrderForm = () => {
                       name="choiceFilterCar"
                       id={id}
                       value={id}
-                      checked={id === carOrder.categoryId}
+                      checked={id === category.categoryActiveId}
                       onChange={() => {}}
                       onClick={() => {
                         setfilterByCategory(`&categoryId=${id}`);
-                        dispatch(setCategoryId(id));
+                        dispatch(setCategoryActiveId(id));
                       }}
                     />
                     <label htmlFor={id} className={styles.label}>
@@ -386,21 +446,40 @@ const OrderForm = () => {
                         name="choiceCar"
                         id={id}
                         value={id}
-                        checked={id === carOrder.carId}
+                        checked={id === carOrder.car.id}
                         onChange={() => {}}
                         onClick={() => {
-                          dispatch(setNameCar(name));
-                          dispatch(setCarId(id));
-                          dispatch(setColorsCar(colors));
-                          dispatch(setStateNumberCar(number));
-                          dispatch(setCarImage(thumbnail.path));
+                          dispatch(
+                            setCar({
+                              name,
+                              number,
+                              priceMin,
+                              priceMax,
+                              description,
+                              categoryId,
+                              thumbnail,
+                              tank,
+                              colors,
+                              id,
+                            }),
+                          );
                           setStartDate(new Date());
                           setEndDate(null);
                           dispatch(setPriceMin(priceMin));
                           dispatch(setPriceMax(priceMax));
                           dispatch(setColorCar(''));
                           dispatch(setFilledStep(0));
-                          dispatch(setRateOrder({ name: '', id: null }));
+                          dispatch(
+                            setRateOrder({
+                              id: null,
+                              price: 0,
+                              rateTypeId: {
+                                unit: '',
+                                name: '',
+                                id: '',
+                              },
+                            }),
+                          );
                           dispatch(setFullTank(false));
                           dispatch(setBabyChair(false));
                           dispatch(setRightHandDrive(false));
@@ -429,7 +508,7 @@ const OrderForm = () => {
           <div className={styles.car__color}>
             <div className={styles.car__color__title}>Цвет</div>
             <ul className={styles.color__list}>
-              {carOrder.colors.length > 1 && (
+              {carOrder.car.colors.length > 1 && (
                 <li className={styles.color__list__item}>
                   <input
                     type="radio"
@@ -451,8 +530,8 @@ const OrderForm = () => {
                 </li>
               )}
 
-              {carOrder.colors.length > 0 &&
-                carOrder.colors.map((color) => (
+              {carOrder.car.colors.length > 0 &&
+                carOrder.car.colors.map((color) => (
                   <li className={styles.color__list__item} key={color}>
                     <input
                       type="radio"
@@ -558,10 +637,9 @@ const OrderForm = () => {
                         dispatch(setFilledStep(1));
                         dispatch(
                           setRateOrder({
-                            name: rateTypeId.name,
                             id: id,
-                            unit: rateTypeId.unit,
                             price: price,
+                            rateTypeId: rateTypeId,
                           }),
                         );
                       }}
