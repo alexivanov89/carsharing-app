@@ -9,4 +9,6 @@ export const tableService = {
   getCarById: (dataId) => apiClient().get(`/db/car/${dataId}`),
   getCategory: () => apiClient().get('/db/category'),
   getRate: () => apiClient().get('/db/rate'),
+  postOrder: (body) => apiClient().post('/db/order/', body),
+  getOrderById: (orderId) => apiClient().get(`/db/order/${orderId}`),
 };

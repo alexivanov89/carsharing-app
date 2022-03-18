@@ -1,14 +1,14 @@
 import styles from './index.module.scss';
 
 const CarTotalInfo = ({ title, carTotalInfo }) => {
-  const { carModel, stateNumberCar, isFullTank, carImage, accessDate } = carTotalInfo;
+  const { car, isFullTank, accessDate } = carTotalInfo;
 
   return (
     <section className={styles.carTotalInfo}>
       <div className={styles.carInfo}>
         {title && <div className={styles.carInfo__title}>{title}</div>}
-        <span className={styles.model}>{carModel}</span>
-        <span className={styles.stateNumberCar}>{stateNumberCar}</span>
+        <span className={styles.model}>{car.name}</span>
+        <span className={styles.stateNumberCar}>{car.number}</span>
         {isFullTank && (
           <div className={styles.fuelQuantity}>
             <span className={styles.fuelQuantity__title}>Топливо &nbsp;</span>
@@ -21,7 +21,7 @@ const CarTotalInfo = ({ title, carTotalInfo }) => {
         </div>
       </div>
       <div className={styles.carImage}>
-        <img src={carImage} alt="car" loading="lazy" />
+        <img src={car.thumbnail.path} alt="car" loading="lazy" />
       </div>
     </section>
   );
