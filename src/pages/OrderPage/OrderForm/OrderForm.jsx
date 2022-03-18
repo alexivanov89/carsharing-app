@@ -623,33 +623,35 @@ const OrderForm = () => {
             <div className={styles.rate__title}>Тариф</div>
             <ul className={styles.rate__list}>
               {rate.rates.length > 0 &&
-                rate.rates.map(({ price, rateTypeId, id }) => (
-                  <li className={styles.rate__list__item} key={id}>
-                    <input
-                      type="radio"
-                      className={styles.radioBtn}
-                      name="choiceRate"
-                      id={id}
-                      value={id}
-                      checked={id === rateOrder.id}
-                      onChange={() => {}}
-                      onClick={() => {
-                        dispatch(setFilledStep(1));
-                        dispatch(
-                          setRateOrder({
-                            id: id,
-                            price: price,
-                            rateTypeId: rateTypeId,
-                          }),
-                        );
-                      }}
-                    />
-                    <label htmlFor={id} className={styles.label}>
-                      {`${rateTypeId.name}, ${price} ₽/${rateTypeId.unit}`}
-                    </label>
-                    <div className={styles.circle} />
-                  </li>
-                ))}
+                rate.rates
+                  .filter(({ rateTypeId }) => rateTypeId)
+                  .map(({ price, rateTypeId, id }) => (
+                    <li className={styles.rate__list__item} key={id}>
+                      <input
+                        type="radio"
+                        className={styles.radioBtn}
+                        name="choiceRate"
+                        id={id}
+                        value={id}
+                        checked={id === rateOrder.id}
+                        onChange={() => {}}
+                        onClick={() => {
+                          dispatch(setFilledStep(1));
+                          dispatch(
+                            setRateOrder({
+                              id: id,
+                              price: price,
+                              rateTypeId: rateTypeId,
+                            }),
+                          );
+                        }}
+                      />
+                      <label htmlFor={id} className={styles.label}>
+                        {`${rateTypeId.name}, ${price} ₽/${rateTypeId.unit}`}
+                      </label>
+                      <div className={styles.circle} />
+                    </li>
+                  ))}
             </ul>
           </div>
 
