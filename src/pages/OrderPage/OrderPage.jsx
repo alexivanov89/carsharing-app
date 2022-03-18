@@ -8,10 +8,11 @@ import OrderForm from './OrderForm/OrderForm';
 import { OrderInfo } from '../../components/OrderInfo';
 import NavigationOrder from './NavigationOrder/NavigationOrder';
 import { setCurrentStep, setFilledStep, setOrderStatus } from '../../store/slices/orderFormSlice';
-import { setMyOrder } from '../../store/slices/myOrder';
 import { tableService } from '../../services/tableService';
 import { routePaths } from '../../router/routes';
 import { renderButton } from './utils/renderButton';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styles from './index.module.scss';
 
 const OrderPage = () => {
@@ -122,7 +123,17 @@ const OrderPage = () => {
                   const order = res.data.data;
                   history.push(`${routePaths.myOrderPage}/${order.id}`);
                 })
-                .catch((e) => console.log(e));
+                .catch(() =>
+                  toast.error('Произошла ошибка. Попробуйте сделать заказ позднее.', {
+                    position: 'top-center',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                  }),
+                );
             }}
           >
             Подтвердить
@@ -135,6 +146,17 @@ const OrderPage = () => {
           >
             Вернуться
           </Button>
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </div>
       </Modal>
     </>
