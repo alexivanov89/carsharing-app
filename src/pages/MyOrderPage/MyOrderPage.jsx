@@ -1,59 +1,83 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import intervalToDuration from 'date-fns/intervalToDuration';
+import format from 'date-fns/format';
 import { CarTotalInfo } from '../../components/CarTotalInfo';
 import { LayoutOrderPage } from '../../components/LayoutOrderPage';
 import { OrderInfo } from '../../components/OrderInfo';
 import Button from '../../components/UI/Button/Button';
+import { fetchOrderAsync } from '../../store/slices/myOrderSlice';
 import styles from './index.module.scss';
 
 const MyOrderPage = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
-  const { pointOfIssue, carOrder, rentalDuration, rate, price, additionalServices } = useSelector(
-    ({ orderForm }) => orderForm,
-  );
-  const { order } = useSelector(({ myOrder }) => myOrder);
+  const { order, loading, error } = useSelector(({ myOrder }) => myOrder);
 
-  const { city, point } = pointOfIssue;
+  const interval =
+    order.dateTo && order.dateFrom
+      ? intervalToDuration({ start: new Date(order.dateFrom), end: new Date(order.dateTo) })
+      : null;
 
   const carTotalInfo = {
-    car: carOrder.car,
-    isFullTank: true,
-    accessDate: '12.06.2019 12:00',
+    car: order.carId,
+    isFullTank: order.isFullTank,
+    accessDate: order.dateFrom ? format(new Date(order.dateFrom), 'dd.MM.yyyy k:mm') : null,
   };
 
   const info = {
-    city: city,
-    point: point,
-    carModel: carOrder.car.name,
-    carColor: carOrder.color,
-    rentalDuration: rentalDuration,
-    rate: rate,
-    price: price,
-    isFullTank: additionalServices.fullTank,
-    isNeedChildChair: additionalServices.babyChair,
-    isRightWheel: additionalServices.rightHandDrive,
+    city: {
+      label: order.cityId.name,
+      value: order.cityId.id,
+    },
+    point: {
+      label: order.pointId.address,
+      value: order.pointId.id,
+      name: order.pointId.name,
+    },
+    carModel: order.carId.name,
+    carColor: order.color,
+    rentalDuration: {
+      label: interval ? `${interval.days}д ${interval.hours}ч ${interval.minutes}м` : null,
+      value: order.dateTo && order.dateFrom ? order.dateTo - order.dateFrom : null,
+    },
+    rate: order.rateId.rateTypeId.name,
+    price: {
+      calculated: order.price,
+    },
+    isFullTank: order.isFullTank,
+    isNeedChildChair: order.isNeedChildChair,
+    isRightWheel: order.isRightWheel,
   };
 
+  useEffect(() => {
+    dispatch(fetchOrderAsync(id));
+  }, [id]);
+
   return (
-    <LayoutOrderPage
-      header={
-        <>
-          <span className={styles.header__title}>Заказ номер &nbsp;</span>
-          <span className={styles.header__value}>{id}</span>
-        </>
-      }
-      mainField={<CarTotalInfo title="Ваш заказ подтверждён" carTotalInfo={carTotalInfo} />}
-      asideField={
-        <OrderInfo
-          info={info}
-          button={
-            <Button classes={styles.orderInfo__button} onClick={() => {}}>
-              Отменить
-            </Button>
-          }
-        />
-      }
-    />
+    !loading &&
+    !error && (
+      <LayoutOrderPage
+        header={
+          <>
+            <span className={styles.header__title}>Заказ номер &nbsp;</span>
+            <span className={styles.header__value}>{id}</span>
+          </>
+        }
+        mainField={<CarTotalInfo title="Ваш заказ подтверждён" carTotalInfo={carTotalInfo} />}
+        asideField={
+          <OrderInfo
+            info={info}
+            button={
+              <Button classes={styles.orderInfo__button} onClick={() => {}}>
+                Отменить
+              </Button>
+            }
+          />
+        }
+      />
+    )
   );
 };
 
