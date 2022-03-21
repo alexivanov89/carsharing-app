@@ -1,5 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { myOrderReducer } from './myOrder';
+import { myOrderReducer } from './myOrderSlice';
 import { orderFormReducer } from './orderFormSlice';
 import { tableReducer } from './tableSlice';
 
