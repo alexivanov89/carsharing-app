@@ -38,12 +38,6 @@ const Menu = ({ menuItems, menuActive, setMenuActive }) => {
             <Button classes={styles.socialBtn}>
               <TelegramSocialIcon />
             </Button>
-            <Button classes={styles.socialBtn}>
-              <FacebookSocialIcon />
-            </Button>
-            <Button classes={styles.socialBtn}>
-              <InstagramSocialIcon />
-            </Button>
           </div>
         </div>
       </div>
